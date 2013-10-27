@@ -21,7 +21,7 @@ class Admin_Controller extends App_Controller {
     if (!$this->get_login_status() || !$this->__get_login_role_status()) {
       $this->session->sess_destroy();
       $this->session->set_flashdata('message', array('alert' => 'error', 'message' => 'Anda tidak dapat mengakses halaman admin SIPD Jember.'));
-      redirect('user/login');
+//      redirect('user/login');
     }
 
     $this->data['user_full_name'] = $this->get_login_active_name();

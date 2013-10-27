@@ -41,7 +41,7 @@ if (!defined('BASEPATH'))
   |
  */
 
-$route['default_controller'] = "welcome";
+$route['default_controller'] = "admin/dashboard";
 $route['404_override'] = '';
 
 
