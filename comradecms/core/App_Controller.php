@@ -15,6 +15,8 @@ class App_Controller extends Behavior_controller {
   protected static $update_id;
   public static $sessionLogin;
   public $data = array();
+  public static $layout;
+  public static $layoutDefault;
 
   public function __construct() {
     parent::__construct();

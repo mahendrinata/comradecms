@@ -35,11 +35,11 @@ class User extends Public_Controller {
       } else {
         $this->session->set_flashdata('message', array('alert' => 'error', 'message' => 'Maaf, Username atau Password Anda salah'));
         $data['title'] = 'Login User SIPD Jember';
-        $this->load->view('layout/blank', $data);
+        $this->load->view('admin/layout/login', $data);
       }
     } else {
       $data['title'] = 'Login User SIPD Jember';
-      $this->load->view('layout/blank', $data);
+      $this->load->view('admin/layout/login', $data);
     }
   }
 

@@ -12,6 +12,9 @@ class Public_Controller extends App_Controller {
   public function __construct() {
     parent::__construct();
 
+    self::$layout = 'template/test/user/';
+    self::$layoutDefault = self::$layout . 'default';
+
     /**
      * @author Mahendri Winata <mahen.0112@gmail.com>
      * 
