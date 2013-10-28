@@ -25,7 +25,6 @@ class App_Controller extends Behavior_controller {
 
     self::$id = $this->uri->segment(4);
     self::$update_id = $this->get_update_id();
-    
   }
 
   /**
@@ -62,22 +61,18 @@ class App_Controller extends Behavior_controller {
   }
 
   protected function get_login_status() {
-    if (isset(self::$sessionLogin[md5('login')]) && self::$sessionLogin[md5('login')] == md5(TRUE)) {
+    if (isset(self::$sessionLogin[md5($this->session->encryption_key . 'login')]) && self::$sessionLogin[md5($this->session->encryption_key . 'login')] == md5($this->session->encryption_key . TRUE)) {
       return TRUE;
     }
     return FALSE;
   }
 
   protected function get_login_active_id() {
-    return self::$sessionLogin[md5('id')];
+    return self::$sessionLogin[md5($this->session->encryption_key . 'id')];
   }
 
   protected function get_login_active_name() {
-    return self::$sessionLogin[md5('name')];
-  }
-
-  protected function get_login_active_instance_id() {
-    return self::$sessionLogin[md5('instance_id')];
+    return self::$sessionLogin[md5($this->session->encryption_key . 'name')];
   }
 
   protected function get_list($data = NULL) {
@@ -111,7 +106,7 @@ class App_Controller extends Behavior_controller {
 
   protected function set_password($password = NULL, $password_salt = NULL) {
     $password_salt = (empty($password_salt)) ? $this->get_password_salt() : $password_salt;
-    return md5($password_salt . md5($password));
+    return md5($this->session->encryption_key . $password_salt . md5($password));
   }
 
   protected function get_validate_password($password = NULL, $user = NULL) {
@@ -131,7 +126,7 @@ class App_Controller extends Behavior_controller {
   protected function set_data_session($data = array()) {
     $session = array();
     foreach ($data as $key => $value) {
-      $session[md5($key)] = $value;
+      $session[md5($this->session->encryption_key . $key)] = $value;
     }
     return $session;
   }
@@ -163,7 +158,7 @@ class App_Controller extends Behavior_controller {
   }
 
   protected function get_site_url_pagination($site_url = NULL) {
-    return $this->router->directory . '/' . $this->router->class . '/' . $this->router->method;
+    return $this->router->directory . '/' . $this->data['class'] . '/' . $this->data['method'];
   }
 
   protected function get_offset_from_segment($segment_pagination = NULL) {
@@ -302,6 +297,7 @@ class App_Controller extends Behavior_controller {
       die;
     }
   }
+
 }
 
 ?>
