@@ -21,7 +21,7 @@ class App_Controller extends Behavior_controller {
 
     self::$sessionLogin = $this->session->all_userdata();
     $this->data['class'] = $this->router->class;
-    $this->data['method'] = $this->router->method;
+    $this->data['method'] = ($this->router->class == $this->router->method) ? 'index' : $this->router->method;
 
     self::$id = $this->uri->segment(4);
     self::$update_id = $this->get_update_id();
