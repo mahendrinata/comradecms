@@ -14,20 +14,20 @@ class Admin_Controller extends App_Controller {
 
     self::$layout = 'admin/layout/';
     self::$layoutDefault = self::$layout . 'default';
-
     /**
      * @author Mahendri Winata <mahen.0112@gmail.com>
      * 
      * Description :
      * Check User login status
      */
-    if (!$this->get_login_status() || !$this->__get_login_role_status()) {
-      $this->session->sess_destroy();
+    if ($this->router->directory != 'admin' &&
+            $this->router->class != 'user' &&
+            $this->router->method != 'login' &&
+            empty(self::$activeSession['admin'])) {
+      $this->session->unset_userdata('admin');
       $this->session->set_flashdata('message', array('alert' => 'error', 'message' => 'Anda tidak dapat mengakses halaman admin SIPD Jember.'));
-      redirect('user/login');
+      redirect('admin/user/login');
     }
-
-    $this->data['user_full_name'] = $this->get_login_active_name();
   }
 
 }

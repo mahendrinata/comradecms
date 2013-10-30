@@ -15,6 +15,7 @@ class App_Controller extends Behavior_controller {
   public $data = array();
   public static $layout;
   public static $layoutDefault;
+  public static $activeSession;
 
   public function __construct() {
     parent::__construct();
@@ -23,6 +24,8 @@ class App_Controller extends Behavior_controller {
     $this->data['method'] = ($this->router->class == $this->router->method) ? 'index' : $this->router->method;
 
     self::$id = $this->uri->segment(4);
+    
+    self::$activeSession = $this->session->all_userdata();
   }
 
   public function error_message($action = NULL, $callback_action = FALSE, $message = NULL) {
@@ -114,7 +117,7 @@ class App_Controller extends Behavior_controller {
   }
 
   function get_validate_password($password = NULL, $user = NULL) {
-    if ($this->set_password($password, $user->password_salt) == $user->password) {
+    if ($this->set_password($password, $user['password_salt']) == $user['password']) {
       return TRUE;
     }
     return FALSE;
