@@ -15,18 +15,6 @@ class App_model extends Behavior_Model {
     parent::__construct();
   }
 
-  public function get_list($data = array(), $id = 'id', $name = 'name', $default = '- PILIHAN -') {
-    $list = array(NULL => $default);
-    foreach ($data as $value) {
-      if (is_array($data)) {
-        $list[$value[$id]] = $value[$name];
-      } elseif (is_object($data)) {
-        $list[$value->{$id}] = $value->{$name};
-      }
-    }
-    return $list;
-  }
-
   public function get_data($type = NULL, $conditions = array()) {
 
     $this->db->from($this->_table);
