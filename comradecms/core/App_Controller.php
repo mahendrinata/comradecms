@@ -49,18 +49,6 @@ class App_Controller extends Behavior_controller {
     $this->session->set_flashdata('message', array('alert' => ($callback_action) ? 'success' : 'error', 'message' => $message));
   }
 
-  public function get_list($data = array(), $id = 'id', $name = 'name', $default = '- PILIHAN -') {
-    $list = array(NULL => $default);
-    foreach ($data as $value) {
-      if (is_array($data)) {
-        $list[$value[$id]] = $value[$name];
-      } elseif (is_object($data)) {
-        $list[$value->{$id}] = $value->{$name};
-      }
-    }
-    return $list;
-  }
-
   protected function set_pagination($count = NULL, $suffix = NULL, $limit = NULL, $segment_pagination = NULL, $site_url = NULL) {
     $config['base_url'] = site_url((empty($site_url) ? $this->get_site_url_pagination() : $site_url));
     $config['total_rows'] = $count;
