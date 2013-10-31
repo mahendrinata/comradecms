@@ -12,7 +12,7 @@ class User extends Admin_Controller {
     parent::__construct();
     $this->load->model('User_model', '', TRUE);
   }
-
+  
   /**
    * @author Mahendri Winata <mahen.0112@gmail.com>
    * 
@@ -53,6 +53,22 @@ class User extends Admin_Controller {
     $this->session->unset_userdata('admin');
     $this->session->set_flashdata('message', array('alert' => 'success', 'message' => 'Anda berhasil logout dari SIPD Jember.'));
     redirect('admin/user/login');
+  }
+  
+  public function index(){
+    $this->load->view(self::$layoutDefault, $this->data);
+  }
+  
+  public function create(){
+    
+  }
+  
+  public function edit(){
+    
+  }
+  
+  public function remove(){
+    
   }
 
 }
