@@ -9,6 +9,8 @@ if (!defined('BASEPATH'))
  */
 class User_model extends App_Model {
 
+  public $has_many = array('user_role');
+
   function login_validate($username = NULL, $password = NULL) {
     
   }
