@@ -60,11 +60,11 @@ class User extends Admin_Controller {
   }
   
   public function create(){
-    
+    $this->load->view(self::$layoutDefault, $this->data);
   }
   
   public function edit(){
-    
+    $this->load->view(self::$layoutDefault, $this->data);
   }
   
   public function remove(){
