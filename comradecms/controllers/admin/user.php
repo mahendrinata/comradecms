@@ -10,7 +10,7 @@ class User extends Admin_Controller {
 
   public function __construct() {
     parent::__construct();
-    $this->load->model('User_model', '', TRUE);
+    $this->load->model('User_model');
   }
   
   /**
@@ -60,7 +60,7 @@ class User extends Admin_Controller {
             ->with('user_role')
             ->get_all();
     
-    $this->load->model('role_model');
+    $this->load->model('Role_model');
     $this->data['roles'] = $this->Role_model->get_all();
     
     $this->load->view(self::$layoutDefault, $this->data);
