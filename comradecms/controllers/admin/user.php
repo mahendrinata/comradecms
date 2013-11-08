@@ -56,6 +56,13 @@ class User extends Admin_Controller {
   }
   
   public function index(){
+    $this->data['users'] = $this->User_model
+            ->with('user_role')
+            ->get_all();
+    
+    $this->load->model('role_model');
+    $this->data['roles'] = $this->Role_model->get_all();
+    
     $this->load->view(self::$layoutDefault, $this->data);
   }
   
