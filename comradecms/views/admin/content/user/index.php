@@ -6,7 +6,7 @@
         <div class="widget-control pull-right">
           <a href="#" data-toggle="dropdown" class="btn dropdown-toggle"><i class="icon-cog"></i><b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="<?php echo base_url(); ?>admin/user/create"><i class="icon-plus"></i> Add New</a></li>
+            <li><a href="<?php echo get_link('admin/user/create'); ?>"><i class="icon-plus"></i> Add New</a></li>
             <!--<li><a href="#"><i class="icon-ok"></i> Bulk Approved</a></li>-->
             <!--<li><a href="#"><i class="icon-minus-sign"></i> Bulk Remove</a></li>-->
           </ul>
@@ -62,10 +62,10 @@
                     <div class="btn-group pull-right">
                       <button data-toggle="dropdown" class="btn dropdown-toggle"><i class="icon-cog"></i><span class="caret"></span></button>
                       <ul class="dropdown-menu">
-                        <li><a href="#"><i class="icon-file"></i> View Details</a></li>
-                        <li><a href="#"><i class="icon-edit"></i> Edit Post</a></li>
-                        <li><a href="#"><i class="icon-trash"></i> Remove Post</a></li>
-                        <li><a href="#"><i class="icon-ok"></i> Publish Post</a></li>
+                        <li><a href="<?php echo get_link('admin/user/detail', $user); ?>"><i class="icon-file"></i> View Details</a></li>
+                        <li><a href="<?php echo get_link('admin/user/edit', $user); ?>"><i class="icon-edit"></i> Edit User</a></li>
+                        <li><a href="<?php echo get_link('admin/user/remove', $user); ?>"><i class="icon-trash"></i> Remove User</a></li>
+                        <li><a href="<?php echo get_link('admin/user/active', $user); ?>"><i class="icon-ok"></i> Set User Status</a></li>
                       </ul>
                     </div>
                   </td>

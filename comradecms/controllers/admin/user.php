@@ -12,7 +12,7 @@ class User extends Admin_Controller {
     parent::__construct();
     $this->load->model('User_model');
   }
-  
+
   /**
    * @author Mahendri Winata <mahen.0112@gmail.com>
    * 
@@ -54,27 +54,35 @@ class User extends Admin_Controller {
     $this->session->set_flashdata('message', array('alert' => 'success', 'message' => 'Anda berhasil logout dari SIPD Jember.'));
     redirect('admin/user/login');
   }
-  
-  public function index(){
+
+  public function index() {
     $this->data['users'] = $this->User_model
             ->with('user_role')
             ->get_all();
-    
+
     $this->load->model('Role_model');
     $this->data['roles'] = $this->Role_model->get_all();
+
+    $this->load->view(self::$layoutDefault, $this->data);
+  }
+
+  public function detail($id = NULL, $uid = NULL) {
+    $this->load->view(self::$layoutDefault, $this->data);
+  }
+
+  public function create() {
+    $this->load->view(self::$layoutDefault, $this->data);
+  }
+
+  public function edit($id = NULL, $uid = NULL) {
+    $this->load->view(self::$layoutDefault, $this->data);
+  }
+
+  public function remove($id = NULL, $uid = NULL) {
     
-    $this->load->view(self::$layoutDefault, $this->data);
   }
-  
-  public function create(){
-    $this->load->view(self::$layoutDefault, $this->data);
-  }
-  
-  public function edit(){
-    $this->load->view(self::$layoutDefault, $this->data);
-  }
-  
-  public function remove(){
+
+  public function active($id = NULL, $uid = NULL) {
     
   }
 

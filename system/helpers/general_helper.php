@@ -82,4 +82,20 @@ if (!function_exists('get_list')) {
   }
 
 }
+
+if (!function_exists('get_link')) {
+
+  function get_link($link = NULL, $data = array(), $uid = TRUE) {
+    if (empty($data)) {
+      return base_url() . $link;
+    } else {
+      if ($uid) {
+        return base_url() . $link . '/' . $data['id'] . '/' . $data['uid'];
+      } else {
+        return base_url() . $link . '/' . $data['id'];
+      }
+    }
+  }
+
+}
 ?>
