@@ -10,6 +10,9 @@ if (!defined('BASEPATH'))
 class App_model extends Behavior_Model {
 
   protected $return_type = 'array';
+  public $before_create = array('created_at', 'updated_at');
+  public $before_update = array('updated_at');
+  public $after_get = array('set_uid');
 
   function __construct() {
     parent::__construct();
@@ -49,6 +52,14 @@ class App_model extends Behavior_Model {
     }
 
     return $return;
+  }
+
+  function get_uid($id = NULL) {
+    return md5($this->_database->CACHE->CI->config->config['encryption_key'] . $this->_table . $id);
+  }
+
+  function set_uid($row) {
+    return array_merge($row, array('uid' => $this->get_uid($row['id'])));
   }
 
 }
