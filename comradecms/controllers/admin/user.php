@@ -66,7 +66,8 @@ class User extends Admin_Controller {
     $this->load->view(self::$layoutDefault, $this->data);
   }
 
-  public function detail($id = NULL, $uid = NULL) {
+  public function detail($id = NULL) {
+    $this->data['user'] = $this->User_model->get_by('id', $id);
     $this->load->view(self::$layoutDefault, $this->data);
   }
 
@@ -74,7 +75,7 @@ class User extends Admin_Controller {
     $this->load->view(self::$layoutDefault, $this->data);
   }
 
-  public function edit($id = NULL, $uid = NULL) {
+  public function edit($id = NULL) {
     $this->load->view(self::$layoutDefault, $this->data);
   }
 

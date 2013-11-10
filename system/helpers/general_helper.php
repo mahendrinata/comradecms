@@ -85,7 +85,7 @@ if (!function_exists('get_list')) {
 
 if (!function_exists('get_link')) {
 
-  function get_link($link = NULL, $data = array(), $uid = TRUE) {
+  function get_link($link = NULL, $data = array(), $uid = FALSE) {
     if (empty($data)) {
       return base_url() . $link;
     } else {

@@ -64,8 +64,8 @@
                       <ul class="dropdown-menu">
                         <li><a href="<?php echo get_link('admin/user/detail', $user); ?>"><i class="icon-file"></i> View Details</a></li>
                         <li><a href="<?php echo get_link('admin/user/edit', $user); ?>"><i class="icon-edit"></i> Edit User</a></li>
-                        <li><a href="<?php echo get_link('admin/user/remove', $user); ?>"><i class="icon-trash"></i> Remove User</a></li>
-                        <li><a href="<?php echo get_link('admin/user/active', $user); ?>"><i class="icon-ok"></i> Set User Status</a></li>
+                        <li><a href="<?php echo get_link('admin/user/remove', $user, TRUE); ?>"><i class="icon-trash"></i> Remove User</a></li>
+                        <li><a href="<?php echo get_link('admin/user/active', $user, TRUE); ?>"><i class="icon-ok"></i> Set User Status</a></li>
                       </ul>
                     </div>
                   </td>

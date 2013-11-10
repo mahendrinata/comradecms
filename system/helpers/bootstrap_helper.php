@@ -492,10 +492,10 @@ function bootstrap_table_body($data = array()) {
   return $output;
 }
 
-function bootstrap_table_view($data) {
-  $output = bootstrap_tag_open('table', array('class' => 'table bg-white'));
+function bootstrap_table_view($data = array()) {
+  $output = bootstrap_tag_open('table', array('class' => 'table'));
   foreach ($data as $row) {
-    $output .= bootstrap_tag('tr', bootstrap_tag('th', $row[0], array('width' => '20%')) . bootstrap_tag('td', ': ' . $row[1]));
+    $output .= bootstrap_tag('tr', bootstrap_tag('th', bootstrap_tag('span', $row['label'], array('class' => 'right')), array('width' => '20%')) . bootstrap_tag('td', ': ' . $row['value']));
   }
   $output .= bootstrap_tag_close('table');
   return $output;
@@ -602,6 +602,18 @@ function bootstrap_control_group($name = NULL, $value = NULL, $option = NULL, $b
 
 function bootstrap_text_important($string = ' *') {
   return bootstrap_tag('span', $string, array('class' => 'text-error'));
+}
+
+function bootstrap_form_row($name = NULL, $data = array()) {
+  $i = 0;
+  $output = NULL;
+  foreach ($data as $option) {
+    $i++;
+    $output .= bootstrap_form_before($name . $i, $option);
+    $output .= $option['value'];
+    $output .=bootstrap_form_after();
+  }
+  return $output;
 }
 
 ?>
