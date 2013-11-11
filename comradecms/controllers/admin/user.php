@@ -63,33 +63,46 @@ class User extends Admin_Controller {
     $this->load->model('Role_model');
     $this->data['roles'] = $this->Role_model->get_all();
 
-    $this->load->view(self::$layoutDefault, $this->data);
+    $this->load->view(self::$layout_default, $this->data);
   }
 
   public function detail($id = NULL) {
     $this->data['user'] = $this->User_model->get_by('id', $id);
-    $this->load->view(self::$layoutDefault, $this->data);
+    $this->load->view(self::$layout_default, $this->data);
   }
 
   public function create() {
-    $this->load->view(self::$layoutDefault, $this->data);
+    if (!empty(self::$post_data)) {
+      self::$post_data = $this->set_encrype_user_data(self::$post_data);
+      $create = $this->User_model->insert(self::$post_data);
+      $this->after_save('create', $create);
+    }
+    $this->load->view(self::$layout_default, $this->data);
   }
 
   public function edit($id = NULL) {
-    if (empty($uid)) {
-      $this->data['user'] = $this->User_model->get_by('id', $id);
-      $this->load->view(self::$layoutDefault, $this->data);
-    } else {
-      
+    if (!empty(self::$post_data)) {
+      self::$post_data = $this->set_encrype_user_data(self::$post_data);
+      $edit = $this->User_model->update($id, self::$post_data);
+      $this->after_save('edit', $edit);
     }
+    $this->data['user'] = $this->User_model->get_by('id', $id);
+    $this->load->view(self::$layout_default, $this->data);
   }
 
   public function remove($id = NULL) {
-    
+    $remove = $this->User_model->delete($id);
+    $this->after_save('remove', $remove);
   }
 
-  public function active($id = NULL, $uid = NULL) {
-    
+  public function active($id = NULL) {
+    $user = $this->User_model->get_by('id', $id);
+    if ($user['is_active']) {
+      $edit = $this->User_model->update($id, array('is_active' => FALSE), TRUE);
+    } else {
+      $edit = $this->User_model->update($id, array('is_active' => TRUE), TRUE);
+    }
+    $this->after_save('edit', $edit);
   }
 
 }

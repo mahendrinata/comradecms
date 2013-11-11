@@ -18,7 +18,7 @@ class Admin_Controller extends App_Controller {
     parent::__construct();
 
     self::$layout = 'admin/layout/';
-    self::$layoutDefault = self::$layout . 'default';
+    self::$layout_default = self::$layout . 'default';
 
     self::$id = $this->uri->segment(4);
     self::$uid = self::$page = $this->uri->segment(5);
@@ -38,8 +38,15 @@ class Admin_Controller extends App_Controller {
     }
 
     if (in_array($this->router->method, $this->skip_uid_validate) && (!empty(self::$id) && !empty(self::$uid))) {
-      $this->validate_uid($id, $uid);
+      $this->validate_uid(self::$id, self::$uid);
     }
+  }
+
+  function after_save($type = NULL, $callback = NULL) {
+    if ($callback) {
+      redirect('admin/' . $this->router->class);
+    }
+    $this->error_message($type, $callback);
   }
 
 }

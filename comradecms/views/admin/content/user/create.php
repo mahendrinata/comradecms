@@ -2,145 +2,26 @@
   <div class="span12">
     <div class="nonboxy-widget">
       <div class="widget-head">
-        <h5> Form Elements</h5>
+        <h5>Create User</h5>
       </div>
       <div class="widget-content">
         <div class="widget-box">
-          <form class="form-horizontal well">
-            <fieldset>
-              <div class="control-group">
-                <label class="control-label" for="input01">Text input</label>
-                <div class="controls">
-                  <input type="text" class="input-xlarge text-tip" id="input01" title="first tooltip">
-                  <p class="help-block">
-                    In addition to freeform text, any HTML5 text-based input appears like so.
-                  </p>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label" for="typehead">Auto Complete</label>
-                <div class="controls">
-                  <input type="text" class="span8" data-provide="typeahead" data-items="5" data-source='["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]' id="typehead">
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label" for="input02">Password Input</label>
-                <div class="controls">
-                  <input type="password" class="input-xlarge" id="input02"/>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">Uneditable input</label>
-                <div class="controls">
-                  <span class="input-xlarge uneditable-input">Some value here</span>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label" for="input04">Disable Input</label>
-                <div class="controls">
-                  <input type="text" class="input-xlarge disabled" disabled="disabled" placeholder="Disabled input hereâ€¦" id="input04">
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">Checkbox</label>
-                <div class="controls">
-                  <label class="checkbox">
-                    <input type="checkbox" value="option1">
-                    Option one</label>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">Disabled checkbox</label>
-                <div class="controls">
-                  <label class="checkbox">
-                    <input type="checkbox" disabled="" value="option1">
-                    This is a disabled checkbox </label>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">Inline checkboxes</label>
-                <div class="controls">
-                  <label class="checkbox inline">
-                    <input type="checkbox" value="option1">
-                    1 </label>
-                  <label class="checkbox inline">
-                    <input type="checkbox" value="option2">
-                    2 </label>
-                  <label class="checkbox inline">
-                    <input type="checkbox" value="option3">
-                    3 </label>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">Checkboxes</label>
-                <div class="controls">
-                  <label class="checkbox">
-                    <input type="checkbox" value="option1" name="optionsCheckboxList1">
-                    Option one</label>
-                  <label class="checkbox">
-                    <input type="checkbox" value="option2" name="optionsCheckboxList2">
-                    Option two</label>
-                  <label class="checkbox">
-                    <input type="checkbox" value="option3" name="optionsCheckboxList3">
-                    Option three</label>
-                  <p class="help-block">
-                    <strong>Note:</strong> Labels surround all the options for much larger click areas and a more usable form.
-                  </p>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">Radio buttons</label>
-                <div class="controls">
-                  <label class="radio">
-                    <input type="radio" checked="" value="option1" name="optionsRadios">
-                    Option one</label>
-                  <label class="radio">
-                    <input type="radio" value="option2" name="optionsRadios">
-                    Option two</label>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">Select list</label>
-                <div class="controls">
-                  <select>
-                    <option>something</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </select>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">Multicon-select</label>
-                <div class="controls">
-                  <select multiple="multiple">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </select>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">File input</label>
-                <div class="controls">
-                  <input class="input-file" type="file">
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">Textarea</label>
-                <div class="controls">
-                  <textarea class="input-xlarge" rows="3"></textarea>
-                </div>
-              </div>
-              <div class="form-actions">
-                <button type="submit" class="btn btn-info">Save changes</button>
-                <button class="btn btn-warning">Cancel</button>
-              </div>
-            </fieldset>
-          </form>
+          <?php
+          echo form_open(get_link('admin/user/create'), array('class' => 'form-horizontal'));
+          echo bootstrap_form_input('username', NULL, array('class' => 'span6', 'placeholder' => 'Username', 'label' => 'Username' . bootstrap_text_important()));
+          echo bootstrap_form_input('first_name', NULL, array('class' => 'span6', 'placeholder' => 'First Name', 'label' => 'First Name' . bootstrap_text_important()));
+          echo bootstrap_form_input('middle_name', NULL, array('class' => 'span6', 'placeholder' => 'Middle Name', 'label' => 'Middle Name'));
+          echo bootstrap_form_input('last_name', NULL, array('class' => 'span6', 'placeholder' => 'Last Name', 'label' => 'Last Name'));
+          echo bootstrap_form_textarea('address', NULL, array('class' => 'span8', 'rows' => 6, 'label' => 'Address'));
+          echo bootstrap_form_input('phone', NULL, array('class' => 'span6', 'placeholder' => 'Phone', 'label' => 'Phone'));
+          echo bootstrap_form_input('email', NULL, array('class' => 'span6', 'placeholder' => 'Email', 'label' => 'Email' . bootstrap_text_important()));
+          echo bootstrap_form_checkbox('is_active', TRUE, array('label' => 'Active Status', 'checked' => 'checked'));
+          echo bootstrap_form_password('password', NULL, array('class' => 'span6', 'placeholder' => 'Password', 'label' => 'Password' . bootstrap_text_important()));
+          echo bootstrap_form_password('confirmation_password', NULL, array('class' => 'span6', 'placeholder' => 'Konfirmasi Password', 'label' => 'Konfirmasi Password' . bootstrap_text_important()));
+          echo bootstrap_control_group(NULL, bootstrap_text_important('Note : (*) Field must be not null.'));
+          echo bootstrap_form_submit(NULL, 'Save', array('class' => 'btn btn-primary', 'after' => anchor('admin/user', 'Back', 'class="btn btn-danger btn-link-bootstrap"')));
+          echo form_close();
+          ?>
         </div>
       </div>
     </div>

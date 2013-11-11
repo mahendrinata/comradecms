@@ -14,8 +14,9 @@ class App_Controller extends Behavior_controller {
   protected static $id;
   public $data = array();
   public static $layout;
-  public static $layoutDefault;
-  public static $activeSession;
+  public static $layout_default;
+  public static $active_session;
+  public static $post_data;
 
   public function __construct() {
     parent::__construct();
@@ -25,7 +26,9 @@ class App_Controller extends Behavior_controller {
 
     self::$id = $this->uri->segment(4);
 
-    self::$activeSession = $this->session->all_userdata();
+    self::$active_session = $this->session->all_userdata();
+    
+    self::$post_data = $this->input->post();
   }
 
   public function error_message($action = NULL, $callback_action = FALSE, $message = NULL) {
@@ -113,7 +116,7 @@ class App_Controller extends Behavior_controller {
 
   function set_encrype_user_data($data = array()) {
     $data['password_salt'] = $this->get_password_salt();
-    $data['password'] = $this->set_password($data['password'], $data['password_salt']);
+    $data['password_secure'] = $this->set_password($data['password'], $data['password_salt']);
     return $data;
   }
 
