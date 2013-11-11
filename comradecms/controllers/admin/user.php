@@ -75,8 +75,13 @@ class User extends Admin_Controller {
     $this->load->view(self::$layoutDefault, $this->data);
   }
 
-  public function edit($id = NULL) {
-    $this->load->view(self::$layoutDefault, $this->data);
+  public function edit($id = NULL, $uid = NULL) {
+    if (empty($uid)) {
+      $this->data['user'] = $this->User_model->get_by('id', $id);
+      $this->load->view(self::$layoutDefault, $this->data);
+    } else {
+      $this->validate_uid($id, $uid);
+    }
   }
 
   public function remove($id = NULL, $uid = NULL) {

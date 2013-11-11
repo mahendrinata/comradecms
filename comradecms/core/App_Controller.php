@@ -24,16 +24,16 @@ class App_Controller extends Behavior_controller {
     $this->data['method'] = ($this->router->class == $this->router->method) ? 'index' : $this->router->method;
 
     self::$id = $this->uri->segment(4);
-    
+
     self::$activeSession = $this->session->all_userdata();
   }
 
   public function error_message($action = NULL, $callback_action = FALSE, $message = NULL) {
     $actions = array(
-        'insert' => array(
+        'create' => array(
             TRUE => 'Anda berhasil melakukan penyimpanan data.',
             FALSE => 'Anda gagal melakukan penyimpanan data'),
-        'update' => array(
+        'edit' => array(
             TRUE => 'Anda berhasil melakukan perubahan data.',
             FALSE => 'Anda gagal melakukan perubahan data.'),
         'delete' => array(
@@ -122,6 +122,17 @@ class App_Controller extends Behavior_controller {
       unset($data[$unset]);
     }
     return $data;
+  }
+
+  function get_uid($id = NULL) {
+    return md5($this->session->encryption_key . plural($this->router->class) . $id);
+  }
+
+  function validate_uid($id = NULL, $uid = NULL) {
+    if ($this->get_uid($id) != $uid) {
+      $this->error_message('redirect');
+      redirect('admin/' . $this->router->class);
+    }
   }
 
 }
