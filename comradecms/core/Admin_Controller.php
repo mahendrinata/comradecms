@@ -25,8 +25,14 @@ class Admin_Controller extends App_Controller {
             $this->router->method != 'login' &&
             empty(self::$activeSession['admin'])) {
       $this->session->unset_userdata('admin');
-      $this->session->set_flashdata('message', array('alert' => 'error', 'message' => 'Anda tidak dapat mengakses halaman admin SIPD Jember.'));
+      $this->session->set_flashdata('message', array('alert' => 'error', 'message' => 'Anda tidak dapat mengakses halaman admin.'));
       redirect('admin/user/login');
+    }
+    
+    $id = $this->uri->segment(4);
+    $uid = $this->uri->segment(5);
+    if (($this->router->method == 'edit' || $this->router->method == 'remove') && (!empty($id) && !empty($uid))) {
+      $this->validate_uid($id, $uid);
     }
   }
 
