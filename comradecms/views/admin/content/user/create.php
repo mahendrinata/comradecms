@@ -8,6 +8,8 @@
         <div class="widget-box">
           <?php
           echo form_open(get_link('admin/user/create'), array('class' => 'form-horizontal'));
+          echo form_hidden('is_hide', FALSE);
+          echo form_hidden('is_block', FALSE);
           echo bootstrap_form_input('username', NULL, array('class' => 'span6', 'placeholder' => 'Username', 'label' => 'Username' . bootstrap_text_important()));
           echo bootstrap_form_input('first_name', NULL, array('class' => 'span6', 'placeholder' => 'First Name', 'label' => 'First Name' . bootstrap_text_important()));
           echo bootstrap_form_input('middle_name', NULL, array('class' => 'span6', 'placeholder' => 'Middle Name', 'label' => 'Middle Name'));

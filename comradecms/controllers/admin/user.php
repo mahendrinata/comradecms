@@ -27,9 +27,11 @@ class User extends Admin_Controller {
           'field' => '*',
           'condition' => array(
               'username' => $this->input->post('username'),
-              'is_active' => TRUE)
+              'is_active' => TRUE,
+              'is_hide' => FALSE,
+              'is_block' => FALSE)
       ));
-
+      
       if ($this->get_validate_password($this->input->post('password'), $user)) {
         $this->session->set_userdata('admin', $user);
         $this->session->set_flashdata('message', array('alert' => 'success', 'message' => 'Anda berhasil login di SIPD Jember'));
@@ -58,7 +60,7 @@ class User extends Admin_Controller {
   public function index() {
     $this->data['users'] = $this->User_model
             ->with('user_role')
-            ->get_all();
+            ->get_many_by('is_hide', FALSE);
 
     $this->load->model('Role_model');
     $this->data['roles'] = $this->Role_model->get_all();
@@ -91,7 +93,7 @@ class User extends Admin_Controller {
   }
 
   public function remove($id = NULL) {
-    $remove = $this->User_model->delete($id);
+    $remove = $this->User_model->update($id, array('is_hide' => TRUE), TRUE);
     $this->after_save('remove', $remove);
   }
 
