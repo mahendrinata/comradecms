@@ -28,12 +28,9 @@ class Admin_Controller extends App_Controller {
      * Description :
      * Check User login status
      */
-    if ($this->router->directory != 'admin' &&
-            $this->router->class != 'user' &&
-            $this->router->method != 'login' &&
-            empty(self::$activeSession['admin'])) {
+    if ($this->data['method'] != 'login' && !isset(self::$active_session['admin'])) {
       $this->session->unset_userdata('admin');
-      $this->session->set_flashdata('message', array('alert' => 'error', 'message' => 'Anda tidak dapat mengakses halaman admin.'));
+      $this->error_message('redirect', FALSE, 'You must login to access administrator.');
       redirect('admin/user/login');
     }
 
