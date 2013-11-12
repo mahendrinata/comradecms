@@ -31,13 +31,13 @@ class User extends Admin_Controller {
               'is_hide' => FALSE,
               'is_block' => FALSE)
       ));
-      
+
       if ($this->get_validate_password($this->input->post('password'), $user)) {
         $this->session->set_userdata('admin', $user);
-        $this->session->set_flashdata('message', array('alert' => 'success', 'message' => 'Anda berhasil login di SIPD Jember'));
+        $this->error_message('login', TRUE, 'You success login, Welcome to system administrator.');
         redirect('admin/dashboard/index');
       } else {
-        $this->session->set_flashdata('message', array('alert' => 'error', 'message' => 'Maaf, Username atau Password Anda salah'));
+        $this->error_message('login', FALSE, 'Sorry, Your username or password is wrong.');
         $this->load->view(self::$layout . 'login', $data);
       }
     } else {
@@ -53,7 +53,7 @@ class User extends Admin_Controller {
    */
   public function logout() {
     $this->session->unset_userdata('admin');
-    $this->session->set_flashdata('message', array('alert' => 'success', 'message' => 'Anda berhasil logout dari SIPD Jember.'));
+    $this->error_message('logout', TRUE, 'You success logout from system administrator.');
     redirect('admin/user/login');
   }
 
@@ -84,8 +84,7 @@ class User extends Admin_Controller {
 
   public function edit($id = NULL) {
     if (!empty(self::$post_data)) {
-      self::$post_data = $this->set_encrype_user_data(self::$post_data);
-      $edit = $this->User_model->update($id, self::$post_data);
+      $edit = $this->User_model->update($id, $this->set_encrype_user_data(self::$post_data));
       $this->after_save('edit', $edit);
     }
     $this->data['user'] = $this->User_model->get_by('id', $id);
