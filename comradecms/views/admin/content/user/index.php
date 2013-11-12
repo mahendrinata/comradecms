@@ -43,21 +43,8 @@
                   <td><?php echo $user['last_name']; ?></td>
                   <td><?php echo $user['email']; ?></td>
                   <td><?php echo $user['phone']; ?></td>
-                  <td>
-                    <?php
-                    if ($user['is_active'])
-                      echo '<span class="label label-success">Active</span>';
-                    else
-                      echo '<span class="label label-important">Non-Active</span>';
-                    ?>
-                  </td>
-                  <td>
-                    <?php
-                    foreach ($user['user_role'] as $user_role) {
-                      
-                    }
-                    ?>
-                  </td>
+                  <td><?php echo get_label_active($user['is_active']);?></td>
+                  <td><?php echo get_label_role($user['user_role'], $roles); ?></td>
                   <td>
                     <div class="btn-group pull-right">
                       <button data-toggle="dropdown" class="btn dropdown-toggle"><i class="icon-cog"></i><span class="caret"></span></button>

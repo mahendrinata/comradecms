@@ -62,6 +62,24 @@ class App_model extends Behavior_Model {
     return array_merge($row, array('uid' => $this->get_uid($row['id'])));
   }
 
+  function save_data_after($rows = array(), $field = NULL, $id = NULL, $delete = FALSE, $skip_validation = TRUE) {
+    $data = array();
+    $i = 0;
+    foreach ($rows as $row) {
+      $data[$i] = $row;
+      $data[$i][$field] = $id;
+      $i++;
+    }
+    if ($delete) {
+      $this->delete_by($field, $id);
+    }
+    if (!empty($data)) {
+      return $this->insert_many($data, $skip_validation);
+    } else {
+      return FALSE;
+    }
+  }
+
 }
 
 ?>

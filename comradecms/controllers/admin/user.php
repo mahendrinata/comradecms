@@ -63,20 +63,27 @@ class User extends Admin_Controller {
             ->get_many_by('is_hide', FALSE);
 
     $this->load->model('Role_model');
-    $this->data['roles'] = $this->Role_model->get_all();
+    $this->data['roles'] = $this->Role_model->dropdown('id', 'name');
+    ;
 
     $this->load->view(self::$layout_default, $this->data);
   }
 
   public function detail($id = NULL) {
-    $this->data['user'] = $this->User_model->get_by('id', $id);
+    $this->data['user'] = $this->User_model
+            ->with('user_role')
+            ->get_by('id', $id);
     $this->load->view(self::$layout_default, $this->data);
   }
 
   public function create() {
     if (!empty(self::$post_data)) {
-      self::$post_data = $this->set_encrype_user_data(self::$post_data);
-      $create = $this->User_model->insert(self::$post_data);
+      $user_roles = $this->get_post_data('user_role');
+      $create = $this->User_model->insert($this->set_encrype_user_data(self::$post_data));
+      if ($create) {
+        $this->load->model('User_role_model');
+        $this->User_role_model->save_data_after($user_roles, 'user_id', $create);
+      }
       $this->after_save('create', $create);
     }
     $this->load->view(self::$layout_default, $this->data);
@@ -84,10 +91,17 @@ class User extends Admin_Controller {
 
   public function edit($id = NULL) {
     if (!empty(self::$post_data)) {
+      $user_roles = $this->get_post_data('user_role');
       $edit = $this->User_model->update($id, $this->set_encrype_user_data(self::$post_data));
+      if ($edit) {
+        $this->load->model('User_role_model');
+        $this->User_role_model->save_data_after($user_roles, 'user_id', $id, TRUE);
+      }
       $this->after_save('edit', $edit);
     }
-    $this->data['user'] = $this->User_model->get_by('id', $id);
+    $this->data['user'] = $this->User_model
+            ->with('user_role')
+            ->get_by('id', $id);
     $this->load->view(self::$layout_default, $this->data);
   }
 

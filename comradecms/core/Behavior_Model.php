@@ -704,6 +704,15 @@ class Behavior_Model extends CI_Model {
         $_POST[$key] = $val;
       }
 
+      /**
+       * Skip validation when form field not set.
+       */
+      foreach ($this->validate as $key => $validate) {
+        if(!array_key_exists($validate['field'], $data)){
+          unset($this->validate[$key]);
+        }
+      }
+      
       $this->load->library('form_validation');
 
       if (is_array($this->validate)) {

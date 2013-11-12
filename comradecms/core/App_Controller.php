@@ -27,7 +27,7 @@ class App_Controller extends Behavior_controller {
     self::$id = $this->uri->segment(4);
 
     self::$active_session = $this->session->all_userdata();
-    
+
     self::$post_data = $this->input->post();
   }
 
@@ -136,6 +136,17 @@ class App_Controller extends Behavior_controller {
       $this->error_message('redirect');
       redirect('admin/' . $this->router->class);
     }
+  }
+
+  function get_post_data($field = NULL, $unset = TRUE) {
+    if (isset(self::$post_data[$field])) {
+      $data = self::$post_data[$field];
+      if ($unset) {
+        unset(self::$post_data[$field]);
+      }
+      return $data;
+    }
+    return array();
   }
 
 }

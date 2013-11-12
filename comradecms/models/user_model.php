@@ -26,13 +26,18 @@ class User_model extends App_Model {
       array(
           'field' => 'email',
           'label' => 'Email',
-          'rules' => 'required|valid_email|is_unique[users.email]'
+          'rules' => 'required|valid_email'
       ),
       array(
           'field' => 'password',
           'label' => 'Password',
-          'rules' => 'required|min_length[5]|matches[confirmation_password]'
+          'rules' => 'required|min_length[5]'
       ),
+      array(
+          'field' => 'confirmation_password',
+          'label' => 'Confirmation Password',
+          'rules' => 'required|min_length[5]|matches[password]'
+      )
   );
 
   function set_data($row) {
