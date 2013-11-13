@@ -8,10 +8,6 @@ if (!defined('BASEPATH'))
  */
 class Tag extends Admin_Controller {
 
-  public function __construct() {
-    parent::__construct();
-  }
-
   public function index() {
     $this->data['tags'] = $this->Tag_model
             ->get_all();

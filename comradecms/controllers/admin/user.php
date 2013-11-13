@@ -8,10 +8,6 @@ if (!defined('BASEPATH'))
  */
 class User extends Admin_Controller {
 
-  public function __construct() {
-    parent::__construct();
-  }
-
   /**
    * @author Mahendri Winata <mahen.0112@gmail.com>
    * 

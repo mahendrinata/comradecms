@@ -47,10 +47,6 @@ class User_model extends App_Model {
     return $row;
   }
 
-  function login_validate($username = NULL, $password = NULL) {
-    
-  }
-
 }
 
 ?>

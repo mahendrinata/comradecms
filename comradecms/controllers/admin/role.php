@@ -8,10 +8,6 @@ if (!defined('BASEPATH'))
  */
 class Role extends Admin_Controller {
 
-  public function __construct() {
-    parent::__construct();
-  }
-
   public function index() {
     $this->data['roles'] = $this->Role_model
             ->get_many_by('is_hide', FALSE);
