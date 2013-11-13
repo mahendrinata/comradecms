@@ -17,6 +17,7 @@ class App_Controller extends Behavior_controller {
   public static $layout_default;
   public static $active_session;
   public static $post_data;
+  public static $default_model;
 
   public function __construct() {
     parent::__construct();
@@ -30,7 +31,10 @@ class App_Controller extends Behavior_controller {
 
     self::$post_data = $this->input->post();
 
-    $this->load->model(ucfirst($this->data['class']) . '_model');
+    self::$default_model = ucfirst($this->data['class']) . '_model';
+    if (class_exists(self::$default_model)) {
+      $this->load->model(self::$default_model);
+    }
   }
 
   public function error_message($action = NULL, $callback_action = FALSE, $message = NULL) {
