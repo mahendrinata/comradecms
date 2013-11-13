@@ -32,7 +32,8 @@ class App_Controller extends Behavior_controller {
     self::$post_data = $this->input->post();
 
     self::$default_model = ucfirst($this->data['class']) . '_model';
-    if (class_exists(self::$default_model)) {
+
+    if (file_exists(APPPATH . 'models/' . strtolower(self::$default_model) . '.php')) {
       $this->load->model(self::$default_model);
     }
   }
