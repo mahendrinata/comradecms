@@ -25,6 +25,8 @@
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Status</th>
+                <th>Blocked</th>
+                <th>Default</th>
                 <th>Role</th>
                 <th>Action</th>
               </tr>
@@ -43,7 +45,9 @@
                   <td><?php echo $user['last_name']; ?></td>
                   <td><?php echo $user['email']; ?></td>
                   <td><?php echo $user['phone']; ?></td>
-                  <td><?php echo get_label_active($user['is_active']);?></td>
+                  <td><?php echo get_label_active($user['is_active']); ?></td>
+                  <td><?php echo get_label_active($user['is_block'], array('Not Blocked', 'Blocked'), array('success', 'important')); ?></td>
+                  <td><?php echo get_label_active($user['is_default'], array('Not Default', 'Default')); ?></td>
                   <td><?php echo get_label_role($user['user_role'], $roles); ?></td>
                   <td>
                     <div class="btn-group pull-right">

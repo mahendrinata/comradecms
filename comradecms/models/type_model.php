@@ -9,6 +9,13 @@ class Type_model extends App_Model {
       'content_tag',
       'setting',
   );
+  public $validate = array(
+      array(
+          'field' => 'name',
+          'label' => 'Name',
+          'rules' => 'required'
+      ),
+  );
 
 }
 

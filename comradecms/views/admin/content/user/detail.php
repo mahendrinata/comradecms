@@ -17,6 +17,7 @@
               array('label' => 'Address', 'value' => $user['address']),
           );
           echo bootstrap_table_view($data);
+          anchor('admin/user', 'Back', 'class="btn btn-danger btn-link-bootstrap"')
           ?>
         </div>
       </div>

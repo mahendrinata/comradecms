@@ -9,6 +9,13 @@ class Role_model extends App_Model {
       'user_role',
       'role_privilege'
   );
+  public $validate = array(
+      array(
+          'field' => 'name',
+          'label' => 'Name',
+          'rules' => 'required'
+      ),
+  );
 
 }
 

@@ -29,6 +29,8 @@ class App_Controller extends Behavior_controller {
     self::$active_session = $this->session->all_userdata();
 
     self::$post_data = $this->input->post();
+
+    $this->load->model(ucfirst($this->data['class']) . '_model');
   }
 
   public function error_message($action = NULL, $callback_action = FALSE, $message = NULL) {

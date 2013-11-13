@@ -36,12 +36,9 @@ function get_label_role($user_roles = array(), $roles = array()) {
   return $output;
 }
 
-function get_label_active($status) {
-  if ($status)
-    $output = '<span class="label label-success">Active</span>';
-  else
-    $output = '<span class="label label-important">Non-Active</span>';
-  return $output;
+function get_label_active($status = NULL, $string = array('Not Active', 'Active'), $label = array('important', 'success')) {
+  $status = (empty($status)) ? FALSE : $status;
+  return '<span class="label label-' . $label[$status] . '">' . $string[$status] . '</span>';
 }
 
 ?>
