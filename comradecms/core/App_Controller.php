@@ -98,8 +98,7 @@ class App_Controller extends Behavior_controller {
   }
 
   function get_password_salt() {
-    $start = rand(0, 23);
-    return md5(substr(md5(rand(1, 10000)), $start, 8));
+    return uniqid();
   }
 
   function set_password($password = NULL, $password_salt = NULL) {

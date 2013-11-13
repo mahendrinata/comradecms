@@ -260,13 +260,13 @@ class Behavior_Model extends CI_Model {
   public function update($primary_value, $data, $skip_validation = FALSE) {
     $valid = TRUE;
 
-    $data = $this->trigger('before_update', $data);
-
     if ($skip_validation === FALSE) {
       $data = $this->validate($data);
     }
 
     if ($data !== FALSE) {
+      $data = $this->trigger('before_update', $data);
+
       $result = $this->_database->where($this->primary_key, $primary_value)
               ->set($data)
               ->update($this->_table);
@@ -708,11 +708,11 @@ class Behavior_Model extends CI_Model {
        * Skip validation when form field not set.
        */
       foreach ($this->validate as $key => $validate) {
-        if(!array_key_exists($validate['field'], $data)){
+        if (!array_key_exists($validate['field'], $data)) {
           unset($this->validate[$key]);
         }
       }
-      
+
       $this->load->library('form_validation');
 
       if (is_array($this->validate)) {
