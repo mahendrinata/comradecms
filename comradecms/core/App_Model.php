@@ -59,7 +59,10 @@ class App_model extends Behavior_Model {
   }
 
   function set_uid($row) {
-    return array_merge($row, array('uid' => $this->get_uid($row['id'])));
+    if (!empty($row))
+      return array_merge($row, array('uid' => $this->get_uid($row['id'])));
+    else
+      return array();
   }
 
   function save_data_after($rows = array(), $field = NULL, $id = NULL, $delete = FALSE, $skip_validation = TRUE) {

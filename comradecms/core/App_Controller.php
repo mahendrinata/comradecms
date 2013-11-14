@@ -155,6 +155,19 @@ class App_Controller extends Behavior_controller {
     return array();
   }
 
+  function set_slug_post_data($name = 'name', $model = NULL) {
+    $model = (empty($model)) ? self::$default_model : $model;
+    if (empty(self::$post_data['slug'])) {
+      $slug = url_title(self::$post_data[$name], 'dash', TRUE);
+      $privilege = $this->{$model}->get_many_by('slug', $slug);
+      if (!empty($privilege)) {
+        self::$post_data['slug'] = $slug . '-' . (count($privilege) + 1);
+      } else {
+        self::$post_data['slug'] = $slug;
+      }
+    }
+  }
+
 }
 
 ?>
