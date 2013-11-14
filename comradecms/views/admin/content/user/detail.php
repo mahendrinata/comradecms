@@ -15,6 +15,8 @@
               array('label' => 'Email', 'value' => $user['email']),
               array('label' => 'Phone', 'value' => $user['phone']),
               array('label' => 'Address', 'value' => $user['address']),
+              array('label' => 'Created at', 'value' => $user['created_at']),
+              array('label' => 'Updated at', 'value' => $user['updated_at']),
           );
           echo bootstrap_table_view($data);
           anchor('admin/user', 'Back', 'class="btn btn-danger btn-link-bootstrap"')

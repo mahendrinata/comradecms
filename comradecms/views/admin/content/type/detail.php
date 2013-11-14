@@ -10,6 +10,8 @@
           $data = array(
               array('label' => 'Name', 'value' => $type['name']),
               array('label' => 'Description', 'value' => $type['description']),
+              array('label' => 'Created at', 'value' => $type['created_at']),
+              array('label' => 'Updated at', 'value' => $type['updated_at']),
           );
           echo bootstrap_table_view($data);
           echo anchor('admin/type', 'Back', 'class="btn btn-danger btn-link-bootstrap"');

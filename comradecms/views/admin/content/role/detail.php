@@ -10,6 +10,8 @@
           $data = array(
               array('label' => 'Name', 'value' => $role['name']),
               array('label' => 'Description', 'value' => $role['description']),
+              array('label' => 'Created at', 'value' => $role['created_at']),
+              array('label' => 'Updated at', 'value' => $role['updated_at']),
           );
           echo bootstrap_table_view($data);
           echo anchor('admin/role', 'Back', 'class="btn btn-danger btn-link-bootstrap"');
