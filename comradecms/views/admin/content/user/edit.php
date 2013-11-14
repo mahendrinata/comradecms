@@ -15,7 +15,13 @@
           echo bootstrap_form_textarea('address', $user['address'], array('class' => 'span8', 'rows' => 6, 'label' => 'Address'));
           echo bootstrap_form_input('phone', $user['phone'], array('class' => 'span6', 'placeholder' => 'Phone', 'label' => 'Phone'));
           echo bootstrap_form_input('email', $user['email'], array('class' => 'span6', 'placeholder' => 'Email', 'label' => 'Email' . bootstrap_text_important()));
-          echo get_dropdown_user_role($user['user_role']);
+          echo get_dropdown($user['user_role'], 'user_role[]', 'role_id', 'Role_model', array(
+              'label' => 'User Role',
+              'data-placeholder' => 'User Role',
+              'style' => 'width:300px',
+              'class' => 'chzn-select',
+              'tabindex' => '13',
+              'multiple' => NULL));
           echo bootstrap_form_password('password', NULL, array('class' => 'span6', 'placeholder' => 'Password', 'label' => 'Password' . bootstrap_text_important()));
           echo bootstrap_form_password('confirmation_password', NULL, array('class' => 'span6', 'placeholder' => 'Confirmation Password', 'label' => 'Confirmation Password' . bootstrap_text_important()));
           echo bootstrap_control_group(NULL, bootstrap_text_important('Note : (*) Field must be not null.'));

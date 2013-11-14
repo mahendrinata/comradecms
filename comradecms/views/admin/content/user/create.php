@@ -19,7 +19,13 @@
           echo bootstrap_form_input('email', NULL, array('class' => 'span6', 'placeholder' => 'Email', 'label' => 'Email' . bootstrap_text_important()));
           echo bootstrap_form_checkbox('is_active', TRUE, array('label' => 'Active Status', 'checked' => 'checked'));
           echo bootstrap_form_checkbox('is_defauld', TRUE, array('label' => 'Default User'));
-          echo get_dropdown_user_role();
+          echo get_dropdown(NULL, 'user_role[]', 'role_id', 'Role_model', array(
+              'label' => 'User Role',
+              'data-placeholder' => 'User Role',
+              'style' => 'width:300px',
+              'class' => 'chzn-select',
+              'tabindex' => '13',
+              'multiple' => NULL));
           echo bootstrap_form_password('password', NULL, array('class' => 'span6', 'placeholder' => 'Password', 'label' => 'Password' . bootstrap_text_important()));
           echo bootstrap_form_password('confirmation_password', NULL, array('class' => 'span6', 'placeholder' => 'Confirmation Password', 'label' => 'Confirmation Password' . bootstrap_text_important()));
           echo bootstrap_control_group(NULL, bootstrap_text_important('Note : (*) Field must be not null.'));
