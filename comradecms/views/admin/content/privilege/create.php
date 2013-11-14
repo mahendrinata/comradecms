@@ -2,7 +2,7 @@
   <div class="span12">
     <div class="nonboxy-widget">
       <div class="widget-head">
-        <h5>Create Role</h5>
+        <h5>Create Privilege</h5>
       </div>
       <div class="widget-content">
         <div class="widget-box">

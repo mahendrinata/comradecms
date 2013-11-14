@@ -2,7 +2,7 @@
   <div class="span12">
     <div class="nonboxy-widget">
       <div class="widget-head">
-        <h5> Role Detail <?php echo $privilege['name']; ?></h5>
+        <h5> Privilege Detail <?php echo $privilege['name']; ?></h5>
       </div>
       <div class="widget-content">
         <div class="widget-box well form-horizontal">
