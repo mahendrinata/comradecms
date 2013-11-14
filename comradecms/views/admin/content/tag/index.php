@@ -21,6 +21,8 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Status</th>
+                <th>Created at</th>
+                <th>Updated at</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -35,6 +37,8 @@
                   <td><?php echo $tag['name']; ?></td>
                   <td><?php echo $tag['description']; ?></td>
                   <td><?php echo get_label_active($tag['is_active']); ?></td>
+                  <td><?php echo $tag['created_at']; ?></td>
+                  <td><?php echo $tag['updated_at']; ?></td>
                   <td>
                     <div class="btn-group pull-right">
                       <button data-toggle="dropdown" class="btn dropdown-toggle"><i class="icon-cog"></i><span class="caret"></span></button>

@@ -28,6 +28,8 @@
                 <th>Blocked</th>
                 <th>Default</th>
                 <th>Role</th>
+                <th>Created at</th>
+                <th>Updated at</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -49,6 +51,8 @@
                   <td><?php echo get_label_active($user['is_block'], array('Not Blocked', 'Blocked'), array('success', 'important')); ?></td>
                   <td><?php echo get_label_active($user['is_default'], array('Not Default', 'Default')); ?></td>
                   <td><?php echo get_label_role($user['user_role'], $roles); ?></td>
+                  <td><?php echo $user['created_at']; ?></td>
+                  <td><?php echo $user['updated_at']; ?></td>
                   <td>
                     <div class="btn-group pull-right">
                       <button data-toggle="dropdown" class="btn dropdown-toggle"><i class="icon-cog"></i><span class="caret"></span></button>

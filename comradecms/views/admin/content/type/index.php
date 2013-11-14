@@ -22,6 +22,8 @@
                 <th>Description</th>
                 <th>Status</th>
                 <th>Default</th>
+                <th>Created at</th>
+                <th>Updated at</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -37,6 +39,8 @@
                   <td><?php echo $type['description']; ?></td>
                   <td><?php echo get_label_active($type['is_active']); ?></td>
                   <td><?php echo get_label_active($type['is_default'], array('Not Default', 'Default')); ?></td>
+                  <td><?php echo $type['created_at']; ?></td>
+                  <td><?php echo $type['updated_at']; ?></td>
                   <td>
                     <div class="btn-group pull-right">
                       <button data-toggle="dropdown" class="btn dropdown-toggle"><i class="icon-cog"></i><span class="caret"></span></button>
