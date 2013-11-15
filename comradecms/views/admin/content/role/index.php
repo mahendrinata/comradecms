@@ -44,11 +44,12 @@
                   <td>
                     <div class="btn-group pull-right">
                       <button data-toggle="dropdown" class="btn dropdown-toggle"><i class="icon-cog"></i><span class="caret"></span></button>
-                      <ul class="dropdown-menu">
+                      <ul class="dropdown-menu"> 
                         <li><a href="<?php echo get_link('admin/role/detail', $role); ?>"><i class="icon-file"></i> View Details</a></li>
                         <li><a href="<?php echo get_link('admin/role/edit', $role); ?>"><i class="icon-edit"></i> Edit role</a></li>
                         <li><a href="<?php echo get_link('admin/role/remove', $role, TRUE); ?>"><i class="icon-trash"></i> Remove role</a></li>
                         <li><a href="<?php echo get_link('admin/role/active', $role, TRUE); ?>"><i class="icon-ok"></i> Set role Status</a></li>
+                        <li><a href="<?php echo get_link('admin/role/privilege', $role); ?>"><i class="icon-th-list"></i> Set Privileges</a></li>
                       </ul>
                     </div>
                   </td>

@@ -968,7 +968,8 @@ a {
   text-align:right !important;
 }
 .widget-content form {
-  margin:0px !important;
+  margin:20px 0 0 !important;
+  padding-bottom: 20px;
 }
 .widget-searchbox ul, .widget-selectbox ul {
   margin:0px;

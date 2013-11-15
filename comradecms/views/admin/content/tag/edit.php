@@ -1,6 +1,6 @@
 <div class="row-fluid">
   <div class="span12">
-    <div class="nonboxy-widget">
+    <div class="widget-block">
       <div class="widget-head">
         <h5>Edit Tag <?php echo $tag['name']; ?></h5>
       </div>

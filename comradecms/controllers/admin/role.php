@@ -59,6 +59,22 @@ class Role extends Admin_Controller {
     $this->after_save('edit', $edit);
   }
 
+  public function privilege($id) {
+    if (!empty(self::$post_data)) {
+      $this->validate_uid(self::$id, self::$uid);
+      $this->load->model('Role_privilege_model');
+      $edit = $this->Role_privilege_model->save_data_after(self::$post_data, 'role_id', self::$id, TRUE);
+      $this->after_save('edit', $edit);
+    }
+    $this->data['role'] = $this->Role_model
+            ->with('role_privilege')
+            ->get_by('id', $id);
+    
+    $this->load->model('Privilege_model');
+    $this->data['privileges'] = $this->Privilege_model->dropdown('id', 'name');
+    $this->load->view(self::$layout_default, $this->data);
+  }
+
 }
 
 ?>

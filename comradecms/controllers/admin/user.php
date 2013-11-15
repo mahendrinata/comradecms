@@ -78,7 +78,7 @@ class User extends Admin_Controller {
       $create = $this->User_model->insert($this->set_encrype_user_data(self::$post_data));
       if ($create) {
         $this->load->model('User_role_model');
-        $this->User_role_model->save_data_after($user_roles, 'user_id', $create);
+        $this->User_role_model->save_data_after($user_roles, 'user_id', $create, TRUE);
       }
       $this->after_save('create', $create);
     }

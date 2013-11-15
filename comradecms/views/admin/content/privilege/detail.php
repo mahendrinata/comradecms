@@ -1,6 +1,6 @@
 <div class="row-fluid">
   <div class="span12">
-    <div class="nonboxy-widget">
+    <div class="widget-block">
       <div class="widget-head">
         <h5> Privilege Detail <?php echo $privilege['name']; ?></h5>
       </div>
