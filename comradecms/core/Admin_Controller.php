@@ -37,6 +37,8 @@ class Admin_Controller extends App_Controller {
     if (in_array($this->router->method, $this->skip_uid_validate) && (!empty(self::$id) && !empty(self::$uid))) {
       $this->validate_uid(self::$id, self::$uid);
     }
+    
+    $this->data['title'] = $this->get_title();
   }
 
   function after_save($type = NULL, $callback = NULL) {
@@ -44,6 +46,14 @@ class Admin_Controller extends App_Controller {
       redirect('admin/' . $this->router->class);
     }
     $this->error_message($type, $callback);
+  }
+
+  function get_title() {
+    if ($this->data['method'] == 'index') {
+      return ucwords($this->data['class'] . ' management');
+    } else {
+      return ucwords($this->data['method'] . ' ' . $this->data['class']);
+    }
   }
 
 }
