@@ -41,17 +41,17 @@ class App_Controller extends Behavior_controller {
   public function error_message($action = NULL, $callback_action = FALSE, $message = NULL) {
     $actions = array(
         'create' => array(
-            TRUE => 'Anda berhasil melakukan penyimpanan data.',
-            FALSE => 'Anda gagal melakukan penyimpanan data'),
+            TRUE => 'Create data success..',
+            FALSE => 'Create data failed.'),
         'edit' => array(
-            TRUE => 'Anda berhasil melakukan perubahan data.',
-            FALSE => 'Anda gagal melakukan perubahan data.'),
+            TRUE => 'Update data success.',
+            FALSE => 'Update data failed.'),
         'delete' => array(
-            TRUE => 'Anda berhasil menghapus data.',
-            FALSE => 'Anda gagal menghapus data.'),
+            TRUE => 'Delete data success.',
+            FALSE => 'Delete data failed.'),
         'redirect' => array(
-            TRUE => 'Halaman yang anda akses benar.',
-            FALSE => 'Terjadi kesalahan pada halaman yang anda akses.'
+            TRUE => 'The page you are correct access.',
+            FALSE => 'An error occurred on the page you access.'
         )
     );
 
@@ -105,7 +105,7 @@ class App_Controller extends Behavior_controller {
   }
 
   function get_password_salt() {
-    return uniqid();
+    return md5(uniqid());
   }
 
   function set_password($password = NULL, $password_salt = NULL) {
