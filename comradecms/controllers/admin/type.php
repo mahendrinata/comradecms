@@ -23,6 +23,7 @@ class Type extends Admin_Controller {
 
   public function create($id = NULL) {
     if (!empty(self::$post_data)) {
+      $this->set_slug_post_data();
       $create = $this->Type_model->insert(self::$post_data);
       $this->after_save('create', $create);
     }
@@ -45,7 +46,7 @@ class Type extends Admin_Controller {
   public function remove($id = NULL) {
     $type = $this->Type_model->get_by('id', $id);
     if ($type['is_default']) {
-      $remove = $this->Type_model->update($id, array('is_hide' => TRUE), TRUE);
+      $remove = $this->Type_model->update($id, array('is_hide' => TRUE, 'is_active' => FALSE), TRUE);
     } else {
       $remove = $this->Type_model->delete($id);
     }

@@ -10,6 +10,7 @@ echo admin_css(array(
     'bootstrap-responsive',
     'icons-sprite',
     'themes',
+    'dropzone'
 ));
 ?>
 <!--[if IE 7]>

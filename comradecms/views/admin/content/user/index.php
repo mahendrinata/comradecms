@@ -50,7 +50,7 @@
                   <td><?php echo get_label_active($user['is_active']); ?></td>
                   <td><?php echo get_label_active($user['is_block'], array('Not Blocked', 'Blocked'), array('success', 'important')); ?></td>
                   <td><?php echo get_label_active($user['is_default'], array('Not Default', 'Default')); ?></td>
-                  <td><?php echo get_label_role($user['user_role'], $roles); ?></td>
+                  <td><?php echo get_label_dropdown($user['user_role'], 'role_id', $roles); ?></td>
                   <td><?php echo $user['created_at']; ?></td>
                   <td><?php echo $user['updated_at']; ?></td>
                   <td>

@@ -42,7 +42,7 @@ class Role extends Admin_Controller {
   public function remove($id = NULL) {
     $role = $this->Role_model->get_by('id', $id);
     if ($role['is_default']) {
-      $remove = $this->Role_model->update($id, array('is_hide' => TRUE), TRUE);
+      $remove = $this->Role_model->update($id, array('is_hide' => TRUE, 'is_active' => FALSE), TRUE);
     } else {
       $remove = $this->Role_model->delete($id);
     }

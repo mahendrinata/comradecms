@@ -8,7 +8,6 @@ class Media_model extends App_Model {
   public $belongs_to = array(
       'type',
       'content',
-      'content_detail',
       'link',
       'user',
       'setting',

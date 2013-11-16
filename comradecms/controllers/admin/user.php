@@ -104,7 +104,7 @@ class User extends Admin_Controller {
   public function remove($id = NULL) {
     $user = $this->User_model->get_by('id', $id);
     if ($user['is_default']) {
-      $remove = $this->User_model->update($id, array('is_hide' => TRUE), TRUE);
+      $remove = $this->User_model->update($id, array('is_hide' => TRUE, 'is_active' => FALSE), TRUE);
     } else {
       $remove = $this->User_model->delete($id);
     }

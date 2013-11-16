@@ -32,9 +32,10 @@ echo admin_js(array(
     'chart/jqplot.highlighter.min',
     'chart/jqplot.cursor.min',
     'chart/jqplot.dateAxisRenderer.min',
-    'custom-script',
     'respond.min',
     'ios-orientationchange-fix',
+    'dropzone.min',
+    'custom-script',
 ));
 ?>
 <script src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script> 

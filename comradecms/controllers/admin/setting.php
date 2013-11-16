@@ -44,7 +44,7 @@ class Setting extends Admin_Controller {
   public function remove($id = NULL) {
     $setting = $this->Setting_model->get_by('id', $id);
     if ($setting['is_default']) {
-      $remove = $this->Setting_model->update($id, array('is_hide' => TRUE), TRUE);
+      $remove = $this->Setting_model->update($id, array('is_hide' => TRUE, 'is_active' => FALSE), TRUE);
     } else {
       $remove = $this->Setting_model->delete($id);
     }

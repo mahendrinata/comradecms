@@ -20,15 +20,15 @@ function get_dropdown($values = array(), $value_group = NULL, $value_field = NUL
   }
 }
 
-function get_label_role($user_roles = array(), $roles = array()) {
-  if (empty($roles)) {
+function get_label_dropdown($datas = array(), $field = NULL, $list = array(), $model = NULL) {
+  if (empty($list)) {
     $CI = get_instance();
     $CI->load->model('Role_model');
-    $roles = $CI->Role_model->dropdown('id', 'name');
+    $list = $CI->{$model}->dropdown('id', 'name');
   }
   $output = NULL;
-  foreach ($user_roles as $role) {
-    $output .= '<span class="label label-warning">' . $roles[$role['role_id']] . '</span><br/>';
+  foreach ($datas as $data) {
+    $output .= '<span class="label label-warning">' . $list[$data[$field]] . '</span><br/>';
   }
   return $output;
 }
