@@ -9,19 +9,19 @@
           <?php
           echo form_open(get_link('admin/content/create'), array('class' => 'form-horizontal'));
           echo form_hidden('is_hide', FALSE);
-          echo get_dropdown(NULL, 'content_detail[][language_id]', NULL, 'Language_model', array(
+          echo get_dropdown(NULL, 'content_detail[0][language_id]', NULL, 'Language_model', array(
               'label' => 'Language',
               'data-placeholder' => 'Language',
               'style' => 'width:300px',
               'class' => 'chzn-select',
               'tabindex' => '13'));
-          echo bootstrap_form_input('content_detail[][slug]', NULL, array('class' => 'span6', 'placeholder' => 'Slug', 'label' => 'Slug' . bootstrap_text_important()));
-          echo bootstrap_form_input('content_detail[][title]', NULL, array('class' => 'span6', 'placeholder' => 'Title', 'label' => 'Title' . bootstrap_text_important()));
-          echo bootstrap_form_textarea('content_detail[][meta_description]', NULL, array('class' => 'span8', 'rows' => 2, 'label' => 'Meta Description'));
-          echo bootstrap_form_textarea('content_detail[][short_description]', NULL, array('class' => 'span8', 'rows' => 3, 'label' => 'Short Description'));
-          echo bootstrap_form_textarea('content_detail[][description]', NULL, array('id' => 'content-editor', 'label' => 'Description'));
-          echo bootstrap_form_input('media[][name]', NULL, array('class' => 'span6', 'placeholder' => 'File/Image Title', 'label' => 'File/Image Title'));
-          echo bootstrap_form_upload('media[][url]', NULL, array('class' => 'input-file', 'label' => 'File/Image'));
+          echo bootstrap_form_input('content_detail[0][slug]', NULL, array('class' => 'span6', 'placeholder' => 'Slug', 'label' => 'Slug' . bootstrap_text_important()));
+          echo bootstrap_form_input('content_detail[0][title]', NULL, array('class' => 'span6', 'placeholder' => 'Title', 'label' => 'Title' . bootstrap_text_important()));
+          echo bootstrap_form_textarea('content_detail[0][meta_description]', NULL, array('class' => 'span8', 'rows' => 2, 'label' => 'Meta Description'));
+          echo bootstrap_form_textarea('content_detail[0][short_description]', NULL, array('class' => 'span8', 'rows' => 3, 'label' => 'Short Description'));
+          echo bootstrap_form_textarea('content_detail[0][description]', NULL, array('id' => 'content-editor', 'label' => 'Description'));
+          echo bootstrap_form_input('media[0][name]', NULL, array('class' => 'span6', 'placeholder' => 'File/Image Title', 'label' => 'File/Image Title'));
+          echo bootstrap_form_upload('media[0][url]', NULL, array('class' => 'input-file', 'label' => 'File/Image'));
           echo get_dropdown(NULL, 'content_type[][type_id]', 'type_id', 'Type_model', array(
               'label' => 'Type',
               'data-placeholder' => 'Type',

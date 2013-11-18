@@ -37,8 +37,8 @@
                 <tr>
                   <td><?php echo $i; ?></td>
                   <td><?php echo $content['content_detail'][0]['title']; ?></td>
-                  <td><?php echo get_label_dropdown($user['content_type'], 'type_id', $roles); ?></td>
-                  <td><?php echo get_label_dropdown($user['content_tag'], 'tag_id', $roles); ?></td>
+                  <td><?php echo get_label_dropdown($content['content_type'], 'type_id', $types); ?></td>
+                  <td><?php echo get_label_dropdown($content['content_tag'], 'tag_id', $tags); ?></td>
                   <td><?php echo $content['counter']; ?></td>
                   <td><?php echo get_label_active($content['is_active']); ?></td>
                   <td><?php echo $content['created_at']; ?></td>
