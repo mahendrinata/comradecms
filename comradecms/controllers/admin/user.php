@@ -74,11 +74,10 @@ class User extends Admin_Controller {
   public function create() {
     if (!empty(self::$post_data)) {
       $user_roles = $this->get_post_data('user_role');
-      self::$post_data['parent_id'] = self::$active_session['admin']['id']; 
+      self::$post_data['parent_id'] = self::$active_session['admin']['id'];
       $create = $this->User_model->insert($this->set_encrype_user_data(self::$post_data));
       if ($create) {
-        $this->load->model('User_role_model');
-        $this->User_role_model->save_data_after($user_roles, 'user_id', $create, TRUE);
+        $this->save_data_after('User_role_model', $user_roles, 'user_id', $create, TRUE);
       }
       $this->after_save('create', $create);
     }

@@ -168,6 +168,11 @@ class App_Controller extends Behavior_controller {
     }
   }
 
+  function after_save_data($model = NULL, $data = array(), $field = NULL, $value = NULL, $validate = TRUE) {
+    $this->load->model($model);
+    return $this->{$model}->save_data_after($data, $field, $value, $validate);
+  }
+
 }
 
 ?>
