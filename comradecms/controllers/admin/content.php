@@ -61,11 +61,11 @@ class Content extends Admin_Controller {
       $content_tag = $this->get_post_data('content_tag');
       $media = $this->get_post_data('media');
       $edit = $this->Content_model->update($id, self::$post_data);
-      if ($create) {
-        $this->save_data_after('Content_detail_model', $content_detail, 'content_id', $create, TRUE);
-        $this->save_data_after('Content_type_model', $content_type, 'content_id', $create, TRUE);
-        $this->save_data_after('Content_tag_model', $content_tag, 'content_id', $create, TRUE);
-        $this->save_data_after('Media_model', $media, 'content_id', $create, TRUE);
+      if ($edit) {
+        $this->save_data_after('Content_detail_model', $content_detail, 'content_id', $edit, TRUE);
+        $this->save_data_after('Content_type_model', $content_type, 'content_id', $edit, TRUE);
+        $this->save_data_after('Content_tag_model', $content_tag, 'content_id', $edit, TRUE);
+        $this->save_data_after('Media_model', $media, 'content_id', $edit, TRUE);
       }
       $this->after_save('edit', $edit);
     }
