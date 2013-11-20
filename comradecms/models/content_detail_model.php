@@ -11,6 +11,10 @@ class Content_detail_model extends App_Model {
       'content',
       'link'
   );
+  
+  public $before_create = array('set_slug' ,'created_at', 'updated_at');
+  
+  
 }
 
 ?>

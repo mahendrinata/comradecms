@@ -82,6 +82,19 @@ class App_model extends Behavior_Model {
       return FALSE;
     }
   }
+  
+  function set_slug($row){
+    if(!isset($row['slug']) || empty($row['slug'])){
+      $slug = url_title((isset($row['name'])) ? $row['name'] : $row['title'], 'dash', TRUE);
+      $count = $this->count_by('slug', $slug);
+      if ($count > 0) {
+        $row['slug'] = $slug . '-' . ($count + 1);
+      } else {
+        $row['slug'] = $slug;
+      }
+    }
+    return $row;
+  }
 
 }
 

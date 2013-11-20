@@ -159,9 +159,9 @@ class App_Controller extends Behavior_controller {
     $model = (empty($model)) ? self::$default_model : $model;
     if (empty(self::$post_data['slug'])) {
       $slug = url_title(self::$post_data[$name], 'dash', TRUE);
-      $privilege = $this->{$model}->get_many_by('slug', $slug);
-      if (!empty($privilege)) {
-        self::$post_data['slug'] = $slug . '-' . (count($privilege) + 1);
+      $count = $this->{$model}->count_by('slug', $slug);
+      if ($count > 0) {
+        self::$post_data['slug'] = $slug . '-' . ($count + 1);
       } else {
         self::$post_data['slug'] = $slug;
       }
