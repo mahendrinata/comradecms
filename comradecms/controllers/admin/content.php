@@ -37,17 +37,7 @@ class Content extends Admin_Controller {
   public function create() {
     if (!empty(self::$post_data)) {
       self::$post_data['user_id'] = self::$active_session['admin']['id'];
-      $content_detail = $this->get_post_data('content_detail');
-      $content_type = $this->get_post_data('content_type');
-      $content_tag = $this->get_post_data('content_tag');
-      $media = $this->get_post_data('media');
       $create = $this->Content_model->insert(self::$post_data);
-      if ($create) {
-        $this->save_data_after('Content_detail_model', $content_detail, 'content_id', $create);
-        $this->save_data_after('Content_type_model', $content_type, 'content_id', $create);
-        $this->save_data_after('Content_tag_model', $content_tag, 'content_id', $create);
-        $this->save_data_after('Media_model', $media, 'content_id', $create);
-      }
       $this->after_save('create', $create);
     }
     $this->load->view(self::$layout_default, $this->data);

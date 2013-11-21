@@ -23,7 +23,6 @@ class Language extends Admin_Controller {
 
   public function create() {
     if (!empty(self::$post_data)) {
-      $this->set_slug_post_data();
       $create = $this->Language_model->insert(self::$post_data);
       $this->after_save('create', $create);
     }

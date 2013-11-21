@@ -23,7 +23,6 @@ class Type extends Admin_Controller {
 
   public function create($id = NULL) {
     if (!empty(self::$post_data)) {
-      $this->set_slug_post_data();
       $create = $this->Type_model->insert(self::$post_data);
       $this->after_save('create', $create);
     }

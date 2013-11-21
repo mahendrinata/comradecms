@@ -220,7 +220,7 @@ class Behavior_Model extends CI_Model {
    * Insert a new row into the table. $data should be an associative array
    * of data to be inserted. Returns newly created ID.
    */
-  public function insert($data, $skip_validation = FALSE, $relateds = array()) {
+  public function insert($data, $skip_validation = FALSE) {
     $valid = TRUE;
 
     if ($skip_validation === FALSE) {
@@ -228,8 +228,8 @@ class Behavior_Model extends CI_Model {
     }
 
     $after = array();
-    if (is_array($relateds)) {
-      foreach ($relateds as $related) {
+    foreach ($this->has_many as $related) {
+      if (isset($data[$related]) && !empty($data[$related])) {
         $after[$related] = $data[$related];
         unset($data[$related]);
       }
@@ -245,7 +245,7 @@ class Behavior_Model extends CI_Model {
 
       if (!empty($after)) {
         $return = $this->with_related($after, $insert_id);
-        return array( $insert_id => $return);
+        return array($insert_id => $return);
       } else {
         return $insert_id;
       }
@@ -255,7 +255,7 @@ class Behavior_Model extends CI_Model {
   }
 
   public function with_related($data = array(), $id = NULL) {
-    $field = singular($this->_table);
+    $field = singular($this->_table) . '_id';
     $return = array();
     foreach ($data as $key => $row) {
       $this->_table = plural($key);
