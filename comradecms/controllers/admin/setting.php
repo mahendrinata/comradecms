@@ -41,22 +41,12 @@ class Setting extends Admin_Controller {
   }
 
   public function remove($id = NULL) {
-    $setting = $this->Setting_model->get_by('id', $id);
-    if ($setting['is_default']) {
-      $remove = $this->Setting_model->update($id, array('is_hide' => TRUE, 'is_active' => FALSE), TRUE);
-    } else {
-      $remove = $this->Setting_model->delete($id);
-    }
+      $remove = $this->Setting_model->remove_or_hide($id);
     $this->after_save('remove', $remove);
   }
 
   public function active($id = NULL) {
-    $setting = $this->Setting_model->get_by('id', $id);
-    if ($setting['is_active']) {
-      $edit = $this->Setting_model->update($id, array('is_active' => FALSE), TRUE);
-    } else {
-      $edit = $this->Setting_model->update($id, array('is_active' => TRUE), TRUE);
-    }
+      $edit = $this->Setting_model->set_status($id);
     $this->after_save('edit', $edit);
   }
 
