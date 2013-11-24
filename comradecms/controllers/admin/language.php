@@ -40,12 +40,7 @@ class Language extends Admin_Controller {
   }
 
   public function remove($id = NULL) {
-    $language = $this->Language_model->get_by('id', $id);
-    if ($language['is_default']) {
-      $remove = $this->Language_model->update($id, array('is_hide' => TRUE), TRUE);
-    } else {
-      $remove = $this->Language_model->delete($id);
-    }
+    $remove = $this->Language_model->remove_or_delete($id);
     $this->after_save('remove', $remove);
   }
 
