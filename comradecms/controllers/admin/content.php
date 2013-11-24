@@ -9,11 +9,7 @@ if (!defined('BASEPATH'))
 class Content extends Admin_Controller {
 
   public function index() {
-    $this->data['contents'] = $this->Content_model
-            ->with('content_detail')
-            ->with('content_tag')
-            ->with('content_type')
-            ->get_many_by('is_hide', FALSE);
+    $this->data['contents'] = $this->Content_model->get_contents();
 
     $this->load->model('Tag_model');
     $this->data['tags'] = $this->Tag_model->dropdown('id', 'name');
@@ -25,12 +21,7 @@ class Content extends Admin_Controller {
   }
 
   public function detail($id = NULL) {
-    $this->data['content'] = $this->Content_model
-            ->with('content_detail')
-            ->with('content_tag')
-            ->with('content_type')
-            ->with('media')
-            ->get_by('id', $id);
+    $this->data['content'] = $this->Content_model->get_content($id);
     $this->load->view(self::$layout_default, $this->data);
   }
 
@@ -55,22 +46,12 @@ class Content extends Admin_Controller {
   }
 
   public function remove($id = NULL) {
-    $content = $this->Content_model->get_by('id', $id);
-    if ($content['is_default']) {
-      $remove = $this->Content_model->update($id, array('is_hide' => TRUE), TRUE);
-    } else {
-      $remove = $this->Content_model->delete($id);
-    }
+    $remove = $this->Content_model->remove_or_hide($id);
     $this->after_save('remove', $remove);
   }
 
   public function active($id = NULL) {
-    $content = $this->Content_model->get_by('id', $id);
-    if ($content['is_active']) {
-      $edit = $this->Content_model->update($id, array('is_active' => FALSE), TRUE);
-    } else {
-      $edit = $this->Content_model->update($id, array('is_active' => TRUE), TRUE);
-    }
+    $edit = $this->Content_model->set_status($id);
     $this->after_save('edit', $edit);
   }
 
