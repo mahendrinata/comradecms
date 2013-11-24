@@ -45,12 +45,7 @@ class Tag extends Admin_Controller {
   }
 
   public function active($id = NULL) {
-    $tag = $this->Tag_model->get_by('id', $id);
-    if ($tag['is_active']) {
-      $edit = $this->Tag_model->update($id, array('is_active' => FALSE), TRUE);
-    } else {
-      $edit = $this->Tag_model->update($id, array('is_active' => TRUE), TRUE);
-    }
+    $edit = $this->Tag_model->set_status($id);
     $this->after_save('edit', $edit);
   }
 
