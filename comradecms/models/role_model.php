@@ -3,8 +3,6 @@
 if (!defined('BASEPATH'))
   exit('No direct script access allowed');
 
-namespace Model\Role;
-
 class Role_model extends App_Model {
 
   public $has_many = array(

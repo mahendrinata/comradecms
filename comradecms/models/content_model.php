@@ -3,8 +3,6 @@
 if (!defined('BASEPATH'))
   exit('No direct script access allowed');
 
-namespace Model\Content;
-
 class Content_model extends App_Model {
 
   public $has_many = array(
@@ -31,6 +29,18 @@ class Content_model extends App_Model {
             ->with('media')
             ->get_by('id', $id);
     return $content;
+  }
+
+  function get_active_contents() {
+    $contents = $this->with('content_detail')
+            ->with('content_tag')
+            ->with('content_type')
+            ->get_many_by(
+            array(
+                'is_hide' => FALSE,
+                'is_active' => TRUE
+    ));
+    return $contents;
   }
 
 }
