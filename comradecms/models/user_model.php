@@ -47,6 +47,30 @@ class User_model extends App_Model {
     return $row;
   }
 
+  function get_user_login($username = NULL) {
+    $user = $this->get_data('first', array(
+        'field' => '*',
+        'condition' => array(
+            'username' => $username,
+            'is_active' => TRUE,
+            'is_hide' => FALSE,
+            'is_block' => FALSE)
+    ));
+    return $user;
+  }
+
+  function get_users() {
+    $users = $this->with('user_role')
+            ->get_many_by('is_hide', FALSE);
+    return $users;
+  }
+
+  function get_user($id = NULL) {
+    $user = $this->with('user_role')
+            ->get_by('id', $id);
+    return $user;
+  }
+
 }
 
 ?>

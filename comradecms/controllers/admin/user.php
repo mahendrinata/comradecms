@@ -18,16 +18,9 @@ class User extends Admin_Controller {
     $data['title'] = 'Login Administrator';
 
     if ($this->form_validation->run()) {
-      $user = $this->User_model->get_data('first', array(
-          'field' => '*',
-          'condition' => array(
-              'username' => $this->input->post('username'),
-              'is_active' => TRUE,
-              'is_hide' => FALSE,
-              'is_block' => FALSE)
-      ));
+      $user = $this->User_model->get_user_login(self::$post_data['username']);
 
-      if ($this->get_validate_password($this->input->post('password'), $user)) {
+      if ($this->get_validate_password(self::$post_data['password'], $user)) {
         $this->session->set_userdata('admin', $user);
         $this->error_message('login', TRUE, 'You success login, Welcome to system administrator.');
         redirect('admin/dashboard/index');
@@ -53,21 +46,16 @@ class User extends Admin_Controller {
   }
 
   public function index() {
-    $this->data['users'] = $this->User_model
-            ->with('user_role')
-            ->get_many_by('is_hide', FALSE);
+    $this->data['users'] = $this->User_model->get_users();
 
     $this->load->model('Role_model');
     $this->data['roles'] = $this->Role_model->dropdown('id', 'name');
-    ;
 
     $this->load->view(self::$layout_default, $this->data);
   }
 
   public function detail($id = NULL) {
-    $this->data['user'] = $this->User_model
-            ->with('user_role')
-            ->get_by('id', $id);
+    $this->data['user'] = $this->User_model->get_user($id);
     $this->load->view(self::$layout_default, $this->data);
   }
 
@@ -100,22 +88,12 @@ class User extends Admin_Controller {
   }
 
   public function remove($id = NULL) {
-    $user = $this->User_model->get_by('id', $id);
-    if ($user['is_default']) {
-      $remove = $this->User_model->update($id, array('is_hide' => TRUE, 'is_active' => FALSE), TRUE);
-    } else {
-      $remove = $this->User_model->delete($id);
-    }
+    $remove = $this->User_model->remove_or_hide($id);
     $this->after_save('remove', $remove);
   }
 
   public function active($id = NULL) {
-    $user = $this->User_model->get_by('id', $id);
-    if ($user['is_active']) {
-      $edit = $this->User_model->update($id, array('is_active' => FALSE), TRUE);
-    } else {
-      $edit = $this->User_model->update($id, array('is_active' => TRUE), TRUE);
-    }
+    $edit = $this->User_model->set_status($id);
     $this->after_save('edit', $edit);
   }
 
