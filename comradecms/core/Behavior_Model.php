@@ -259,7 +259,7 @@ class Behavior_Model extends CI_Model {
     $return = array();
     foreach ($data as $key => $row) {
       $this->_table = plural($key);
-      if (is_array($row)) {
+      if (!empty($row) && is_array($row)) {
         foreach ($row as $insert) {
           $return[$key][] = $this->insert(array_merge($insert, array($field => $id)), TRUE);
         }
@@ -290,6 +290,14 @@ class Behavior_Model extends CI_Model {
     if ($skip_validation === FALSE) {
       $data = $this->validate($data);
     }
+    
+    $after = array();
+    foreach ($this->has_many as $related) {
+      if (isset($data[$related]) && !empty($data[$related])) {
+        $after[$related] = $data[$related];
+        unset($data[$related]);
+      }
+    }
 
     if ($data !== FALSE) {
       $data = $this->trigger('before_update', $data);
@@ -300,7 +308,12 @@ class Behavior_Model extends CI_Model {
 
       $this->trigger('after_update', array($data, $result));
 
-      return $result;
+      if (!empty($after)) {
+        $return = $this->with_related($after, $primary_value);
+        return array($primary_value => $return);
+      } else {
+        return $result;
+      }
     } else {
       return FALSE;
     }
