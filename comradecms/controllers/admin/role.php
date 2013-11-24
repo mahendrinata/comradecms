@@ -3,6 +3,8 @@
 if (!defined('BASEPATH'))
   exit('No direct script access allowed');
 
+namespace Controller\Admin\Role;
+
 /**
  * @author Mahendri Winata <mahen.0112@gmail.com>
  */

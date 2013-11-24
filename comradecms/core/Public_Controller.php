@@ -3,6 +3,8 @@
 if (!defined('BASEPATH'))
   exit('No direct script access allowed');
 
+namespace Controller\PublicController;
+
 /**
  * Public Controller use to add all function used by guest user
  * @author Mahendri Winata <mahen.0112@gmail.com>

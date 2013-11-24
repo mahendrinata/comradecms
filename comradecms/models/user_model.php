@@ -3,6 +3,8 @@
 if (!defined('BASEPATH'))
   exit('No direct script access allowed');
 
+namespace Model\User;
+
 /**
  * User model use to add all behavior user
  * @author Mahendri Winata <mahen.0112@gmail.com>

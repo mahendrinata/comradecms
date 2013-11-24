@@ -3,6 +3,8 @@
 if (!defined('BASEPATH'))
   exit('No direct script access allowed');
 
+namespace Model\Privilege;
+
 class Privilege_model extends App_Model {
 
   public $has_many = array('role_privilege');

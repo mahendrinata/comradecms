@@ -3,6 +3,8 @@
 if (!defined('BASEPATH'))
   exit('No direct script access allowed');
 
+namespace Controller\AdminController;
+
 /**
  * Admin Controller use to add all function admin used by user
  * @author Mahendri Winata <mahen.0112@gmail.com>
