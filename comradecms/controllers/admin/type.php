@@ -43,22 +43,12 @@ class Type extends Admin_Controller {
   }
 
   public function remove($id = NULL) {
-    $type = $this->Type_model->get_by('id', $id);
-    if ($type['is_default']) {
-      $remove = $this->Type_model->update($id, array('is_hide' => TRUE, 'is_active' => FALSE), TRUE);
-    } else {
-      $remove = $this->Type_model->delete($id);
-    }
+    $remove = $this->Type_model->remove_or_hide($id);
     $this->after_save('remove', $remove);
   }
 
   public function active($id = NULL) {
-    $type = $this->Type_model->get_by('id', $id);
-    if ($type['is_active']) {
-      $edit = $this->Type_model->update($id, array('is_active' => FALSE), TRUE);
-    } else {
-      $edit = $this->Type_model->update($id, array('is_active' => TRUE), TRUE);
-    }
+    $edit = $this->Type_model->set_status($id);
     $this->after_save('edit', $edit);
   }
 
