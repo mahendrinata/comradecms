@@ -33,7 +33,14 @@ class Setting_model extends App_Model {
           'rules' => 'required'
       ),
   );
-  
+
+  function get_active_template() {
+    $this->load->model('Type_model');
+    $type = $this->Type_model->get_by('slug', 'template');
+
+    return $this->get_by(array('type_id' => $type['id'], 'is_active' => TRUE));
+  }
+
 }
 
 ?>

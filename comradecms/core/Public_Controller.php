@@ -9,21 +9,26 @@ if (!defined('BASEPATH'))
  */
 class Public_Controller extends App_Controller {
 
+  public static $template_folder = 'template';
+
   public function __construct() {
     parent::__construct();
 
     self::$layout = 'template/test/user/';
     self::$layout_default = self::$layout . 'default';
 
-    /**
-     * @author Mahendri Winata <mahen.0112@gmail.com>
-     * 
-     * Description :
-     * Check User login status
-     */
-    if ($this->get_login_status() && ($this->router->class == 'user' && $this->router->method == 'login')) {
-      redirect('admin/dashboard');
-    }
+    $this->set_settings();
+  }
+
+  function set_settings() {
+    $this->load->model('Setting_model');
+
+    $this->data['template'] = $this->Setting_model->get_active_template();
+    self::$layout = self::$template_folder . '/' . $this->data['template']['value'] . '/layout/';
+    self::$layout_default = self::$layout . $this->data['class'];
+
+    print_r($this->data['template']);
+    die;
   }
 
 }

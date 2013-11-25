@@ -8,11 +8,6 @@ if (!defined('BASEPATH'))
  */
 class User extends Public_Controller {
 
-  function __construct() {
-    parent::__construct();
-    $this->load->model('User_model', '', TRUE);
-  }
-
 }
 
 ?>

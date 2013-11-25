@@ -14,14 +14,26 @@ class Content_model extends App_Model {
   );
   public $belongs_to = array('user');
 
-  function get_contents() {
+  /**
+   * 
+   * @param bolean $active
+   * @param bolean $hide
+   * @return array
+   */
+  function get_contents($active = FALSE, $hide = FALSE, $conditions = array()) {
+    $conditions = array_merge(array('is_hide' => $hide, 'is_active' => $active), $conditions);
     $contents = $this->with('content_detail')
             ->with('content_tag')
             ->with('content_type')
-            ->get_many_by('is_hide', FALSE);
+            ->get_many_by($conditions);
     return $contents;
   }
 
+  /**
+   * 
+   * @param int $id
+   * @return array
+   */
   function get_content($id = NULL) {
     $content = $this->with('content_detail')
             ->with('content_tag')
@@ -31,18 +43,21 @@ class Content_model extends App_Model {
     return $content;
   }
 
-  function get_active_contents() {
-    $contents = $this->with('content_detail')
-            ->with('content_tag')
-            ->with('content_type')
-            ->get_many_by(
-            array(
-                'is_hide' => FALSE,
-                'is_active' => TRUE
-    ));
-    return $contents;
+  function get_contents_by_type($type = NULL) {
+    $this->load->model('Type_model');
+    $type = $this->Type_model->get_by('slug', $type);
+
+    return $this->get_contents(TRUE, TRUE, array('type_id' => $type['id']));
   }
 
+  function get_content_by_slug($slug = NULL) {
+    $content = $this->with('content_detail')
+            ->with('content_tag')
+            ->with('content_type')
+            ->with('media')
+            ->get_by('slug', $slug);
+    return $content;
+  }
 }
 
 ?>

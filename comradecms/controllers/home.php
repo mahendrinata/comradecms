@@ -5,13 +5,14 @@ if (!defined('BASEPATH'))
 
 class Home extends Public_Controller {
 
-  public function __construct() {
-    parent::__construct();
-    $contents = $this->Content_model->get_active_contents();
-    print_r($contents);
+  public function index() {
+    $this->load->model('Content_model');
+    $$this->data['contents'] = $this->Content_model->get_contents(TRUE);
+    
+    $this->data['portfolios'] = $this->Content_model->get_contents_by_type('portfolio');
+    $this->load->view(self::$layout_default, $this->data);
   }
 
-  
 }
 
 ?>
