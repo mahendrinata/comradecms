@@ -14,21 +14,17 @@ class Public_Controller extends App_Controller {
   public function __construct() {
     parent::__construct();
 
-    self::$layout = 'template/test/user/';
-    self::$layout_default = self::$layout . 'default';
-
     $this->set_settings();
   }
 
   function set_settings() {
     $this->load->model('Setting_model');
 
-    $this->data['template'] = $this->Setting_model->get_active_template();
+    $this->data['template_data'] = $this->Setting_model->get_active_template();
     self::$layout = self::$template_folder . '/' . $this->data['template']['value'] . '/layout/';
     self::$layout_default = self::$layout . $this->data['class'];
 
-    print_r($this->data['template']);
-    die;
+    $this->data['template'] = self::$template_folder . '/' . $this->data['template']['value'] . '/';
   }
 
 }

@@ -116,6 +116,26 @@ class App_model extends Behavior_Model {
     return $edit;
   }
 
+  function set_tree_data($data = array(), $parent = 'parent_id', $id = 'id', $child = 'child') {
+    $new_data = array();
+    foreach ($data as $value) {
+      $new_data[$value[$parent]][] = $value;
+    }
+    $tree = $this->tree_data($new_data, array($data[0]), $id, $child);
+    return $tree;
+  }
+
+  function tree_data(&$data = array(), $id = 'id', $child = 'child') {
+    $tree = array();
+    foreach ($data as $key => $val) {
+      if (isset($data[$val[$id]])) {
+        $val[$child] = $this->tree_data($data, $data[$val[$id]], $id, $child);
+      }
+      $tree[] = $val;
+    }
+    return $tree;
+  }
+
 }
 
 ?>

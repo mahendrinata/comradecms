@@ -38,17 +38,17 @@ if (!function_exists('admin_js')) {
 if (!function_exists('template_base_url')) {
 
   function template_base_url($folder = NULL) {
-    return (empty($folder)) ? base_url() . 'assets/template/' : base_url() . 'assets/template/' . $folder . '/';
+    return (empty($folder)) ? base_url() . 'assets/template/' : base_url() . 'assets/' . $folder . '/';
   }
 
 }
 
 if (!function_exists('template_css')) {
 
-  function template_css($css = array()) {
+  function template_css($css = array(), $folder = NULL) {
     $output = '';
     foreach ($css as $style) {
-      $output .= link_tag(template_base_url('css') . $style . '.css');
+      $output .= link_tag(template_base_url($folder . 'css') . $style . '.css');
     }
     return $output;
   }
@@ -57,10 +57,10 @@ if (!function_exists('template_css')) {
 
 if (!function_exists('template_js')) {
 
-  function template_js($js = array()) {
+  function template_js($js = array(), $folder = NULL) {
     $output = '';
     foreach ($js as $script) {
-      $output .= '<script type="text/javascript" src="' . template_base_url('js') . $script . '.js' . '"></script>';
+      $output .= '<script type="text/javascript" src="' . template_base_url($folder . 'js') . $script . '.js' . '"></script>';
     }
     return $output;
   }
