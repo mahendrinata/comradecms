@@ -30,6 +30,10 @@ class Media_model extends App_Model {
     
     return $galleries;
   }
+  
+  function get_random_gallery(){
+    
+  }
 
 }
 

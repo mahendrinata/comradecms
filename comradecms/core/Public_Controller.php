@@ -19,6 +19,8 @@ class Public_Controller extends App_Controller {
     $this->set_settings();
 
     $this->set_language();
+    
+    $this->set_widget();
   }
 
   function set_settings() {
@@ -40,6 +42,14 @@ class Public_Controller extends App_Controller {
       self::$language = $this->Language_model->get_by('slug', self::$default_language);
       $this->session->set_userdata('language', self::$language);
     }
+  }
+
+  function set_widget() {
+    $this->load->model('Media_model');
+    $this->data['widget'] = array(
+        'video' => '//www.youtube.com/embed/I_Wyn1FgXwI',
+        'image' => $this->Media_model->get_random_gallery()
+    );
   }
 
 }
