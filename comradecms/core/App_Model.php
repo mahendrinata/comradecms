@@ -13,9 +13,12 @@ class App_model extends Behavior_Model {
   public $before_create = array('set_slug', 'created_at', 'updated_at');
   public $before_update = array('updated_at');
   public $after_get = array('set_uid');
+  public static $active_session;
 
   function __construct() {
     parent::__construct();
+    $this->load->library('session');
+    self::$active_session = $this->session->all_userdata();
   }
 
   public function get_data($type = NULL, $conditions = array()) {
@@ -55,7 +58,7 @@ class App_model extends Behavior_Model {
   }
 
   function get_uid($id = NULL) {
-    return md5($this->_database->CACHE->CI->config->config['encryption_key'] . $this->_table . $id);
+    return md5($this->session->encryption_key . $this->_table . $id);
   }
 
   function set_uid($row) {

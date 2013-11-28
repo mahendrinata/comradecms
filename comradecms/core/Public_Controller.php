@@ -45,9 +45,13 @@ class Public_Controller extends App_Controller {
   }
 
   function set_widget() {
-    $this->load->model('Media_model');
     $this->data['widget']['video'] = '//www.youtube.com/embed/I_Wyn1FgXwI';
+    
+    $this->load->model('Media_model');
     $this->data['widget']['image'] = $this->Media_model->get_random_gallery();
+    
+    $this->load->model('Content_model');
+    $this->data['widget']['recent'] = $this->Content_model->get_recent_content();
   }
 
 }

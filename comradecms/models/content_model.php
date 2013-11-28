@@ -58,6 +58,24 @@ class Content_model extends App_Model {
             ->get_by('slug', $slug);
     return $content;
   }
+
+  function get_recent_content($limit = 10) {
+    $conditions = array(
+        'contents.is_active' => TRUE,
+        'contents.is_hide' => FALSE,
+        'content_details.language_id' => self::$active_session['language']['id']
+    );
+    $this->_database
+            ->select('content_details.*')
+            ->join('content_details', 'contents.id = content_details.content_id', 'INNER')
+            ->limit($limit)
+            ->order_by('content_details.id', 'DESC');
+
+    $contents = $this->get_many_by($conditions);
+
+    return $contents;
+  }
+
 }
 
 ?>
