@@ -31,8 +31,12 @@ class Media_model extends App_Model {
     return $galleries;
   }
   
-  function get_random_gallery(){
-    
+  function get_random_gallery($limit = 10){
+    $this->_database->limit($limit)
+            ->order_by('id', 'RAND()')
+            ->join('contents', 'contents.id = medias.content_id')
+            ->join('content_details', 'contents.id = content_details.content_id');
+    return $this->get_many_by('is_active', TRUE);
   }
 
 }
