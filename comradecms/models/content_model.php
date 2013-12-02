@@ -43,11 +43,22 @@ class Content_model extends App_Model {
     return $content;
   }
 
-  function get_contents_by_type($type = NULL) {
-    $this->load->model('Type_model');
-    $type = $this->Type_model->get_by('slug', $type);
+  function get_contents_by_type($type = NULL, $limit = 8) {
+    $conditions = array(
+        'contents.is_active' => TRUE,
+        'contents.is_hide' => FALSE,
+        'content_details.language_id' => self::$active_session['language']['id'],
+        'types.slug' => $type
+    );
+    $this->_database
+            ->join('content_details', 'contents.id = content_details.content_id', 'INNER')
+            ->join('content_types', 'content_types.content_id = contents.id', 'INNER')
+            ->join('types', 'content_types.type_id = types.id', 'INNER')
+            ->limit($limit)
+            ->order_by('content_details.id', 'DESC');
 
-    return $this->get_contents(TRUE, TRUE, array('type_id' => $type['id']));
+    $contents = $this->get_many_by($conditions);
+    return $contents;
   }
 
   function get_content_by_slug($slug = NULL) {
