@@ -5,6 +5,20 @@ if (!defined('BASEPATH'))
 
 class Content_model extends App_Model {
 
+  public $fields = array(
+      array('name' => 'id', 'type' => 'integer', 'require' => TRUE, 'primary_key' => TRUE, 'auto_increment' => TRUE),
+      array('name' => 'start', 'type' => 'datetime'),
+      array('name' => 'end', 'type' => 'datetime'),
+      array('name' => 'latitude', 'type' => 'varchar'),
+      array('name' => 'latitude', 'type' => 'varchar'),
+      array('name' => 'latitude', 'type' => 'varchar'),
+      array('name' => 'counter', 'type' => 'integer', 'require' => TRUE, 'default' => 0),
+      array('name' => 'is_active', 'type' => 'boolean'),
+      array('name' => 'is_hide', 'type' => 'boolean'),
+      array('name' => 'user_id', 'type' => 'integer', 'index' => TRUE),
+      array('name' => 'created_at', 'type' => 'datetime'),
+      array('name' => 'updated_at', 'type' => 'datetime'),
+  );
   public $has_many = array(
       'content_detail',
       'content_tag',
