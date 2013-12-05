@@ -12,7 +12,7 @@ class Media_model extends App_Model {
       array('name' => 'description', 'type' => 'text'),
       array('name' => 'dir', 'type' => 'varchar', 'require' => TRUE),
       array('name' => 'type', 'type' => 'varchar', 'require' => TRUE),
-      array('name' => 'size', 'type' => 'decimal', 'lenght' => '20,2', 'require' => TRUE),
+      array('name' => 'size', 'type' => 'decimal', 'constraint' => '20,2', 'require' => TRUE),
       array('name' => 'parent_id', 'type' => 'integer', 'index' => TRUE),
       array('name' => 'type_id', 'type' => 'integer', 'index' => TRUE),
       array('name' => 'content_id', 'type' => 'integer', 'index' => TRUE),
