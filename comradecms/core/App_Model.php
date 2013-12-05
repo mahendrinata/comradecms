@@ -21,6 +21,29 @@ class App_model extends Behavior_Model {
     self::$active_session = $this->session->all_userdata();
   }
 
+  public function get_fields($models = array(), $string = TRUE) {
+    $string_field = array();
+    if (empty($models)) {
+      foreach ($fields as $field) {
+        $string_field[] = $this->_table . '.' . $field['name'] . ' AS ' . $this->_table . '__' . $field['name'];
+      }
+    } else {
+      foreach ($models as $model) {
+        $this_model = $model . '_model';
+        $this->load->model($this_model);
+        $fields_model = $this->{$this_model}->fields;
+        foreach ($fields_model as $f) {
+          $string_field[] = $this->{$this_model}->_table . '.' . $f['name'] . ' AS ' . $this->{$this_model}->_table . '__' . $f['name'];
+        }
+      }
+    }
+    if ($string) {
+      return implode(',', $string_field);
+    } else {
+      return $string_field;
+    }
+  }
+
   public function get_data($type = NULL, $conditions = array()) {
 
     $this->db->from($this->_table);
