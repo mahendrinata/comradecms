@@ -71,17 +71,18 @@ class App_model extends Behavior_Model {
     $string_condition = array();
     foreach ($tables as $table_name => $fields) {
       foreach ($fields as $field => $value) {
+        $field_name = $table_name . '.' . $field;
         if (!is_array($value)) {
-          $string_condition[] = $this->set_condition_value($field, $value);
+          $string_condition[] = $this->set_condition_value($field_name, $value);
         } elseif ($field == 'OR' && is_array($value)) {
           $ors = array();
           foreach ($value as $field_or => $or) {
-            $ors[] = $this->set_condition_value($field_or, $or);
+            $ors[] = $this->set_condition_value($table_name . '.' . $field_or, $or);
           }
           $string_condition[] = '(' . implode(' OR ', $ors) . ')';
         } elseif (is_array($value)) {
           $in = '("' . implode('",', $value) . '")';
-          $string_condition[] = $field . ' IN ' . $in;
+          $string_condition[] = $field_name . ' IN ' . $in;
         }
       }
     }
@@ -96,7 +97,7 @@ class App_model extends Behavior_Model {
     $string_join = array();
     foreach ($tables as $tables => $joins) {
       foreach ($joins as $position => $join) {
-        $string_join[] = (!is_numeric($position)) ? $position : NULL . ' JOIN' . $tables.' ON '. $join;
+        $string_join[] = (!is_numeric($position)) ? $position : NULL . ' JOIN' . $tables . ' ON ' . $join;
       }
     }
     if ($string) {
@@ -105,34 +106,54 @@ class App_model extends Behavior_Model {
       return $string_join;
     }
   }
-  
+
   public function get_data($type = NULL, $conditions = array()) {
 
-    $this->db->from($this->_table);
+    $query = array();
 
-    if (isset($conditions['field']))
-      $this->db->select($conditions['field']);
-    else
-      $this->db->select('*');
-
-    if (isset($conditions['condition']))
-      $this->db->where($conditions['condition']);
-
-    if (isset($conditions['limit'])) {
-      if (isset($conditions['offset']))
-        $this->db->limit($conditions['limit'], $conditions['offset']);
-      else
-        $this->db->limit($conditions['limit']);
+    if (isset($conditions['fields']) && !empty($conditions['fields'])) {
+      foreach ($conditions['fields'] as $table => $fields) {
+        if (is_array($fields) && !empty($fields)) {
+          $string_fields[] = $this->set_fields(array($table => $fields));
+        } else {
+          $string_fields[] = $this->get_fields(array($table));
+        }
+      }
+      $query[] = 'SELECT ' . implode(',', $string_fields);
+    } else {
+      $query[] = 'SELECT *';
     }
 
-    $data = $this->db->get();
+    if (isset($conditions['from']) && !empty($conditions['from'])) {
+      $query[] = 'FROM ' . $conditions['from'];
+    } else {
+      $query[] = 'FROM ' . $this->_table;
+    }
+
+    if (isset($conditions['join']) && !empty($conditions['join'])) {
+      $query[] = $this->set_join_tables($conditions['join']);
+    }
+
+    if (isset($conditions['condition']) && !empty($conditions['condition'])) {
+      $query[] = $this->set_conditions($conditions['condition']);
+    }
+
+    if (isset($conditions['limit'])) {
+      if (isset($conditions['offset'])) {
+        $query[] = 'LIMIT ' . $conditions['limit'] . ',' . $conditions['offset'];
+      } else {
+        $query[] = 'LIMIT ' . $conditions['limit'];
+      }
+    }
+
+    $data = $this->db->query(implode(' ', $query));
 
     switch ($type) {
       case 'all':
-        $return = (!isset($conditions['is_object'])) ? $data->result_array() : $data->result();
+        $return = (isset($conditions['return']) && $conditions['return'] == 'object') ? $data->result_array() : $data->result();
         break;
       case 'first':
-        $return = (!isset($conditions['is_object'])) ? $data->row_array() : $data->row();
+        $return = (isset($conditions['is_object']) && $conditions['return'] == 'object') ? $data->row_array() : $data->row();
         break;
       case 'count':
         $return = $data->num_rows();
