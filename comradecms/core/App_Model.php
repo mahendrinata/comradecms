@@ -91,11 +91,21 @@ class App_model extends Behavior_Model {
       return $string_condition;
     }
   }
-  
-  function set_join_tables($tables = array()){
-    
-  }
 
+  function set_join_tables($tables = array(), $string = TRUE) {
+    $string_join = array();
+    foreach ($tables as $tables => $joins) {
+      foreach ($joins as $position => $join) {
+        $string_join[] = (!is_numeric($position)) ? $position : NULL . ' JOIN' . $tables.' ON '. $join;
+      }
+    }
+    if ($string) {
+      return implode(' ', $string_join);
+    } else {
+      return $string_join;
+    }
+  }
+  
   public function get_data($type = NULL, $conditions = array()) {
 
     $this->db->from($this->_table);
