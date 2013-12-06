@@ -29,7 +29,7 @@ class App_model extends Behavior_Model {
       }
     } else {
       foreach ($models as $model) {
-        $this_model = $model . '_model';
+        $this_model = singular($model) . '_model';
         $this->load->model($this_model);
         $fields_model = $this->{$this_model}->fields;
         foreach ($fields_model as $f) {
@@ -48,7 +48,7 @@ class App_model extends Behavior_Model {
     $string_field = array();
     foreach ($tables as $table_name => $fields) {
       foreach ($fields as $field) {
-        $string_field[] = $table_name . '.' . $field . ' AS ' . $table_name . '__' . $field;
+        $string_field[] = plural($table_name) . '.' . $field . ' AS ' . plural($table_name) . '__' . $field;
       }
     }
     if ($string) {
@@ -71,7 +71,7 @@ class App_model extends Behavior_Model {
     $string_condition = array();
     foreach ($tables as $table_name => $fields) {
       foreach ($fields as $field => $value) {
-        $field_name = $table_name . '.' . $field;
+        $field_name = plural($table_name) . '.' . $field;
         if (!is_array($value)) {
           $string_condition[] = $this->set_condition_value($field_name, $value);
         } elseif ($field == 'OR' && is_array($value)) {
@@ -97,7 +97,7 @@ class App_model extends Behavior_Model {
     $string_join = array();
     foreach ($tables as $tables => $joins) {
       foreach ($joins as $position => $join) {
-        $string_join[] = (!is_numeric($position)) ? $position : NULL . ' JOIN' . $tables . ' ON ' . $join;
+        $string_join[] = (!is_numeric($position)) ? $position : NULL . ' JOIN' . plural($tables) . ' ON ' . $join;
       }
     }
     if ($string) {
@@ -121,7 +121,18 @@ class App_model extends Behavior_Model {
       }
       $query[] = 'SELECT ' . implode(',', $string_fields);
     } else {
-      $query[] = 'SELECT *';
+      $table = array();
+      if (isset($conditions['from']) && !empty($conditions['from'])) {
+        $table[] = $conditions['from'];
+      } else {
+        $table[] = $this->_table;
+      }
+      if (isset($conditions['join']) && !empty($conditions['join'])) {
+        foreach ($conditions['join'] as $table => $join) {
+          $table[] = $table;
+        }
+      }
+      $query[] = 'SELECT ' . $this->get_fields($table);
     }
 
     if (isset($conditions['from']) && !empty($conditions['from'])) {
@@ -160,7 +171,29 @@ class App_model extends Behavior_Model {
         break;
     }
 
-    return $return;
+    return $this->mapper_result($return);
+  }
+
+  public function mapper_result($data = NULL) {
+    if (!is_array($data)) {
+      return $data;
+    } else {
+      $return = array();
+      $iterator = 0;
+      foreach ($data as $key => $row) {
+        if (!is_array($row)) {
+          $cell = explode('__', $key);
+          $return[$cell[0]][$cell[1]] = $row;
+        } else {
+          foreach ($row as $field => $value) {
+            $cell = explode('__', $field);
+            $return[$iterator][$cell[0]][$cell[1]] = $value;
+            $iterator++;
+          }
+        }
+      }
+      return $return;
+    }
   }
 
   function get_uid($id = NULL) {
