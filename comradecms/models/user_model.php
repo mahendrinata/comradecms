@@ -67,13 +67,13 @@ class User_model extends App_Model {
   }
 
   function get_user_login($username = NULL) {
-    $user = $this->get_data('first', array(
-        'condition' => array(
-            'username' => $username,
-            'is_active' => TRUE,
-            'is_hide' => FALSE,
-            'is_block' => FALSE)
-    ));
+    $conditions = array(
+        'username' => $username,
+        'is_active' => TRUE,
+        'is_hide' => FALSE,
+        'is_block' => FALSE);
+
+    $user = $this->get_by($conditions);
     return $user;
   }
 
