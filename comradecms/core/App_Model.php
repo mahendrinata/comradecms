@@ -44,6 +44,58 @@ class App_model extends Behavior_Model {
     }
   }
 
+  public function set_fields($tables = array(), $string = TRUE) {
+    $string_field = array();
+    foreach ($tables as $table_name => $fields) {
+      foreach ($fields as $field) {
+        $string_field[] = $table_name . '.' . $field . ' AS ' . $table_name . '__' . $field;
+      }
+    }
+    if ($string) {
+      return implode(',', $string_field);
+    } else {
+      return $string_field;
+    }
+  }
+
+  public function set_condition_value($field = NULL, $value = NULL) {
+    $operations = explode(' ', $field);
+    if (count($operations) == 1) {
+      return $field . ' = "' . $value . '"';
+    } else {
+      return $field . ' "' . $value . '"';
+    }
+  }
+
+  public function set_conditions($tables = array(), $string = TRUE) {
+    $string_condition = array();
+    foreach ($tables as $table_name => $fields) {
+      foreach ($fields as $field => $value) {
+        if (!is_array($value)) {
+          $string_condition[] = $this->set_condition_value($field, $value);
+        } elseif ($field == 'OR' && is_array($value)) {
+          $ors = array();
+          foreach ($value as $field_or => $or) {
+            $ors[] = $this->set_condition_value($field_or, $or);
+          }
+          $string_condition[] = '(' . implode(' OR ', $ors) . ')';
+        } elseif (is_array($value)) {
+          $in = '("' . implode('",', $value) . '")';
+          $string_condition[] = $field . ' IN ' . $in;
+        }
+      }
+    }
+    if ($string) {
+      return implode(' AND ', $string_condition);
+    } else {
+      return $string_condition;
+    }
+  }
+  
+  function set_join_tables($tables = array()){
+    
+  }
+
   public function get_data($type = NULL, $conditions = array()) {
 
     $this->db->from($this->_table);

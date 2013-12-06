@@ -68,7 +68,6 @@ class User_model extends App_Model {
 
   function get_user_login($username = NULL) {
     $user = $this->get_data('first', array(
-        'field' => '*',
         'condition' => array(
             'username' => $username,
             'is_active' => TRUE,
