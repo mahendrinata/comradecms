@@ -59,6 +59,7 @@ class App_model extends Behavior_Model {
   }
 
   public function set_condition_value($field = NULL, $value = NULL) {
+//    $field = str_replace('.', '__', $field);
     $operations = explode(' ', $field);
     if (count($operations) == 1) {
       return $field . ' = "' . $value . '"';
@@ -77,7 +78,7 @@ class App_model extends Behavior_Model {
         } elseif ($field == 'OR' && is_array($value)) {
           $ors = array();
           foreach ($value as $field_or => $or) {
-            $ors[] = $this->set_condition_value($table_name . '.' . $field_or, $or);
+            $ors[] = $this->set_condition_value(plural($table_name) . '.' . $field_or, $or);
           }
           $string_condition[] = '(' . implode(' OR ', $ors) . ')';
         } elseif (is_array($value)) {
@@ -87,7 +88,7 @@ class App_model extends Behavior_Model {
       }
     }
     if ($string) {
-      return implode(' AND ', $string_condition);
+      return 'WHERE ' . implode(' AND ', $string_condition);
     } else {
       return $string_condition;
     }
@@ -97,7 +98,7 @@ class App_model extends Behavior_Model {
     $string_join = array();
     foreach ($tables as $tables => $joins) {
       foreach ($joins as $position => $join) {
-        $string_join[] = (!is_numeric($position)) ? $position : NULL . ' JOIN' . plural($tables) . ' ON ' . $join;
+        $string_join[] = $position . ' JOIN ' . plural($tables) . ' ON ' . $join;
       }
     }
     if ($string) {
@@ -128,8 +129,8 @@ class App_model extends Behavior_Model {
         $table[] = $this->_table;
       }
       if (isset($conditions['join']) && !empty($conditions['join'])) {
-        foreach ($conditions['join'] as $table => $join) {
-          $table[] = $table;
+        foreach ($conditions['join'] as $table_join => $join) {
+          $table[] = $table_join;
         }
       }
       $query[] = 'SELECT ' . $this->get_fields($table);
@@ -161,10 +162,10 @@ class App_model extends Behavior_Model {
 
     switch ($type) {
       case 'all':
-        $return = (isset($conditions['return']) && $conditions['return'] == 'object') ? $data->result_array() : $data->result();
+        $return = (isset($conditions['return']) && $conditions['return'] == 'object') ? $data->result() : $data->result_array();
         break;
       case 'first':
-        $return = (isset($conditions['is_object']) && $conditions['return'] == 'object') ? $data->row_array() : $data->row();
+        $return = (isset($conditions['is_object']) && $conditions['return'] == 'object') ? $data->row() : $data->row_array();
         break;
       case 'count':
         $return = $data->num_rows();
@@ -172,6 +173,10 @@ class App_model extends Behavior_Model {
     }
 
     return $this->mapper_result($return);
+  }
+
+  public function model_object_word($char = NULL) {
+    return str_replace(' ', '', ucwords(str_replace('_', ' ', singular($char))));
   }
 
   public function mapper_result($data = NULL) {
@@ -183,14 +188,14 @@ class App_model extends Behavior_Model {
       foreach ($data as $key => $row) {
         if (!is_array($row)) {
           $cell = explode('__', $key);
-          $return[$cell[0]][$cell[1]] = $row;
+          $return[$this->model_object_word($cell[0])][$cell[1]] = $row;
         } else {
           foreach ($row as $field => $value) {
             $cell = explode('__', $field);
-            $return[$iterator][$cell[0]][$cell[1]] = $value;
-            $iterator++;
+            $return[$iterator][$this->model_object_word($cell[0])][$cell[1]] = $value;
           }
         }
+        $iterator++;
       }
       return $return;
     }

@@ -35,6 +35,26 @@ class Content_model extends App_Model {
    * @return array
    */
   function get_contents($active = FALSE, $hide = FALSE, $conditions = array()) {
+    $data = $this->get_data('first', array(
+//        'fields' => array(),
+        'join' => array(
+            'content_detail' => array('left' => 'contents.id = content_details.content_id'),
+//            'content_tag'=> array('left' => 'contents.id = content_tags.content_id'),
+//            'content_type'=> array('left' => 'contents.id = content_types.content_id'),
+//            'tag'=> array('left' => 'tags.id = content_tags.tag_id'),
+//            'type'=> array('left' => 'types.id = content_types.type_id'),
+        ),
+        'condition' => array(
+            'content' => array(
+                'is_hide' => $hide,
+                'is_active' => $active
+            ),
+            'content_detail' => array(
+                'language_id' => self::$active_session['language']['id']
+            )
+        )
+    ));
+    print_r($data);die;
     $conditions = array_merge(array('is_hide' => $hide, 'is_active' => $active), $conditions);
     $contents = $this->with('content_detail')
             ->with('content_tag')
