@@ -1317,7 +1317,7 @@ embed.elfinder-quicklook-preview-audio {
 	padding:10px 0px 3px 5px;
 	border-left:0 solid transparent;
 	border-top:0 solid transparent;
-	border-right:0 solid transparent
+	border-right:0 solid transparent;
 	background: #eeeeee; /* Old browsers */
 background: -moz-linear-gradient(top,  #eeeeee 0%, #cccccc 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#cccccc)); /* Chrome,Safari4+ */

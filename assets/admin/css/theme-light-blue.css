@@ -63,6 +63,7 @@
 	background: -ms-linear-gradient(top, rgba(158, 166, 175, 1) 0%, rgba(89, 106, 114, 1) 100%); /* IE10+ */
 	background: linear-gradient(to bottom, rgba(158, 166, 175, 1) 0%, rgba(89, 106, 114, 1) 100%); /* W3C */
  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9ea6af', endColorstr='#596a72', GradientType=0 ); /* IE6-9 */
+	-moz-box-shadow:
  0 1px 0 rgba(255, 255, 255, 0.2) inset;
 	-moz-box-shadow:
  0 1px 0 rgba(255, 255, 255, 0.2) inset;

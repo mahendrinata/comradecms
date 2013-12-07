@@ -172,7 +172,7 @@ table.display thead th {
 	border-bottom: 1px solid #ccc;
 	font-weight: bold;
 	cursor: pointer;
- * cursor: hand;
+ *cursor: hand;
 }
 table.display tfoot {
 	background:url(../images/layout-sprite.png) repeat-x 0 -751px;
@@ -533,7 +533,7 @@ div.box {
 .data_editable tr td, .data_editable tr th, .data_tbl_search tr td, .data_tbl_search tr th, #action_tbl tr td, #action_tbl tr th {
 	border-right:#ccc 1px solid;
 }
-.data_editable tr td:last-child, .data_editable tr th:last-child, .data_tbl_search tr td:last-child, .data_tbl_search tr th:last-child, #action_tbl tr td:last-child, #action_tbl tr th:last-child, {
+.data_editable tr td:last-child, .data_editable tr th:last-child, .data_tbl_search tr td:last-child, .data_tbl_search tr th:last-child, #action_tbl tr td:last-child, #action_tbl tr th:last-child {
 border-right:0px;
 }
 .table_top {
