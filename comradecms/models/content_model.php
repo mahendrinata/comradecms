@@ -34,7 +34,7 @@ class Content_model extends App_Model {
    * @param bolean $hide
    * @return array
    */
-  function get_contents($active = FALSE, $hide = FALSE) {
+  function get_contents() {
     $contents = $this->find('all', array(
         'join' => array(
             'content_detail' => array('left' => 'contents.id = content_details.content_id'),
@@ -42,8 +42,8 @@ class Content_model extends App_Model {
         ),
         'condition' => array(
             'content' => array(
-                'is_hide' => $hide,
-                'is_active' => $active
+                'is_hide' => FALSE,
+                'is_active' => TRUE
             ),
             'content_detail' => array(
                 'language_id' => self::$active_session['language']['id']
@@ -53,10 +53,12 @@ class Content_model extends App_Model {
     $this->load->model('Content_tag_model');
     $this->load->model('Content_type_model');
     $this->load->model('Media_model');
+    $this->load->model('Message_model');
     foreach ($contents as $key => $row) {
       $contents[$key]['ContentTag'] = $this->Content_tag_model->get_content_tags($row['Content']['id']);
       $contents[$key]['ContentType'] = $this->Content_type_model->get_content_types($row['Content']['id']);
       $contents[$key]['ContentMedia'] = $this->Media_model->get_content_medias($row['Content']['id']);
+      $contents[$key]['Comment']['count'] = $this->Message_model->get_count_comments($row['Content']['id']);
     }
     return $contents;
   }
@@ -87,9 +89,11 @@ class Content_model extends App_Model {
       $this->load->model('Content_tag_model');
       $this->load->model('Content_type_model');
       $this->load->model('Media_model');
+      $this->load->model('Message_model');
       $content['ContentTag'] = $this->Content_tag_model->get_content_tags($content['Content']['id']);
       $content['ContentType'] = $this->Content_type_model->get_content_types($content['Content']['id']);
       $content['ContentMedia'] = $this->Media_model->get_content_medias($content['Content']['id']);
+      $content['Comment'] = $this->Message_model->get_comments($content['Content']['id']);
     }
     return $content;
   }
@@ -99,7 +103,7 @@ class Content_model extends App_Model {
         'join' => array(
             'content_detail' => array('left' => 'contents.id = content_details.content_id'),
             'content_type' => array('left' => 'contents.id = content_types.content_id'),
-            'type' => array('left' => 'type.id = content_types.type_id'),
+            'type' => array('left' => 'types.id = content_types.type_id'),
             'user' => array('left' => 'contents.user_id = users.id'),
         ),
         'condition' => array(
@@ -117,9 +121,11 @@ class Content_model extends App_Model {
     ));
     $this->load->model('Content_tag_model');
     $this->load->model('Media_model');
+    $this->load->model('Message_model');
     foreach ($contents as $key => $row) {
       $contents[$key]['ContentTag'] = $this->Content_tag_model->get_content_tags($row['Content']['id']);
       $contents[$key]['ContentMedia'] = $this->Media_model->get_content_medias($row['Content']['id']);
+      $contents[$key]['Comment']['count'] = $this->Message_model->get_count_comments($row['Content']['id']);
     }
   }
 
@@ -146,9 +152,11 @@ class Content_model extends App_Model {
     ));
     $this->load->model('Content_type_model');
     $this->load->model('Media_model');
+    $this->load->model('Message_model');
     foreach ($contents as $key => $row) {
       $contents[$key]['ContentType'] = $this->Content_type_model->get_content_types($row['Content']['id']);
       $contents[$key]['ContentMedia'] = $this->Media_model->get_content_medias($row['Content']['id']);
+      $contents[$key]['Comment']['count'] = $this->Message_model->get_count_comments($row['Content']['id']);
     }
   }
 
@@ -176,6 +184,7 @@ class Content_model extends App_Model {
       $content['ContentTag'] = $this->Content_tag_model->get_content_tags($content['Content']['id']);
       $content['ContentType'] = $this->Content_type_model->get_content_types($content['Content']['id']);
       $content['ContentMedia'] = $this->Media_model->get_content_medias($content['Content']['id']);
+      $content['Comment'] = $this->Message_model->get_comments($content['Content']['id']);
     }
     return $content;
   }

@@ -20,6 +20,14 @@ class Message_model extends App_Model {
   );
   public $belongs_to = array('content');
 
+  public function get_count_comments($content_id = NULL) {
+    return $this->count_by('content_id', $content_id);
+  }
+
+  public function get_comments($content_id = NULL) {
+    return $this->get_many('content_id', $content_id);
+  }
+
 }
 
 ?>

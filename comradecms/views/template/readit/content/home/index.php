@@ -2,18 +2,20 @@
   <div id="timeline" class="col span_2_of_3">  
     <?php foreach ($contents as $content) { ?>
       <div class="timeline-item">
-        <div class="timeline-author-date"><span><?php ?></span></div>
+        <div class="timeline-author-date"><span><?php echo datetime_to_date($content['Content']['updated_at']); ?></span></div>
         <a href="blog.html" class="timeline-author-link">
-          <img alt="avatar" src="images/avatars/avatar.png">
+          <img alt="avatar" src="<?php echo get_user_avatar($content['User']['photo']); ?>">
         </a>
-        <a href="blog.html" class="timeline-item-link">
+        <a href="<?php echo get_content_url($content['ContentDetail']['slug']); ?>" class="timeline-item-link">
           <div class="timeline-item-content">
-            <div class="timeline-item-cover">
-              <img src="images/cover/paris.jpg" alt="paris">
-            </div>
-            <h2>Plongée dans le fantastique social</h2>
-            <p>Connaissez-vous l’homme-aquarium ? C’est un camelot du marché d’Aligre qui avale couramment cinq litres d’eau, puis cinq petites grenouilles, devant les yeux des badauds ébahis, avant de les recracher, flotte et rainettes bien vivantes, et de faire sa quête…</p>
-            <div class="timeline-item-meta"><span class="timeline-item-author">Félix Bayart</span>, <span class="timeline-item-comments-count">18 comments</span></div>
+            <?php if (!empty($content['ContentMedia'])) { ?>
+              <div class="timeline-item-cover">
+                <img src="<?php echo get_content_media($content['ContentMedia'][0]['dir']); ?>" alt="paris">
+              </div>
+            <?php } ?>
+            <h2><?php echo $content['ContentDetail']['title']; ?></h2>
+            <p><?php echo $content['ContentDetail']['short_description']; ?></p>
+            <div class="timeline-item-meta"><span class="timeline-item-author"><?php echo get_full_name($content['User']); ?></span>, <span class="timeline-item-comments-count"><?php echo $content['Comment']['count']; ?> comments</span></div>
           </div>
         </a>
       </div>

@@ -115,4 +115,30 @@ function in_multiarray($elem, $array, $field) {
   return false;
 }
 
+function get_user_avatar($photo = NULL) {
+  $photo = (empty($photo)) ? 'avatar.png' : $photo;
+  return base_url() . 'assets/property/photo/' . $photo;
+}
+
+function get_content_media($photo = NULL, $type = NULL) {
+  $type = (empty($type)) ? NULL : $type . '-';
+  return base_url() . 'assets/property/content/' . $type . $photo;
+}
+
+function get_content_url($slug = NULL) {
+  if (empty($slug)) {
+    return '#';
+  } else {
+    return base_url() . 'detail/' . $slug;
+  }
+}
+
+function get_full_name($user = array()) {
+  return implode(' ', array($user['first_name'], $user['middle_name'], $user['last_name']));
+}
+
+function datetime_to_date($datetime){
+  return date('d/m/Y', strtotime($datetime));
+}
+
 ?>
