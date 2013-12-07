@@ -7,6 +7,7 @@ class Tag_model extends App_Model {
 
   public $fields = array(
       array('name' => 'id', 'type' => 'integer', 'require' => TRUE, 'primary_key' => TRUE, 'auto_increment' => TRUE),
+      array('name' => 'slug', 'type' => 'varchar', 'require' => TRUE, 'unique' => TRUE, 'index' => TRUE),
       array('name' => 'name', 'type' => 'varchar', 'require' => TRUE),
       array('name' => 'description', 'type' => 'text'),
       array('name' => 'is_active', 'type' => 'boolean'),

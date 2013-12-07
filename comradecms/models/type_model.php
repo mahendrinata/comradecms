@@ -10,7 +10,6 @@ class Type_model extends App_Model {
       array('name' => 'slug', 'type' => 'varchar', 'require' => TRUE, 'unique' => TRUE, 'index' => TRUE),
       array('name' => 'name', 'type' => 'varchar', 'require' => TRUE),
       array('name' => 'description', 'type' => 'text'),
-      array('name' => 'priority', 'type' => 'integer'),
       array('name' => 'is_active', 'type' => 'boolean'),
       array('name' => 'is_default', 'type' => 'boolean'),
       array('name' => 'is_hide', 'type' => 'boolean'),

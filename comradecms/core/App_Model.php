@@ -108,7 +108,11 @@ class App_model extends Behavior_Model {
     }
   }
 
-  public function get_data($type = NULL, $conditions = array()) {
+  public function find($type = NULL, $conditions = array()) {
+
+    if ($type == 'first') {
+      $conditions['limit'] = 1;
+    }
 
     $query = array();
 
@@ -137,7 +141,7 @@ class App_model extends Behavior_Model {
     }
 
     if (isset($conditions['from']) && !empty($conditions['from'])) {
-      $query[] = 'FROM ' . $conditions['from'];
+      $query[] = 'FROM ' . plural($conditions['from']);
     } else {
       $query[] = 'FROM ' . $this->_table;
     }
@@ -149,6 +153,11 @@ class App_model extends Behavior_Model {
     if (isset($conditions['condition']) && !empty($conditions['condition'])) {
       $query[] = $this->set_conditions($conditions['condition']);
     }
+    
+    if (isset($conditions['order']) && !empty($conditions['order'])) {
+      $query[] = 'ORDER BY '.implode(',', $conditions['order']);
+    }
+    
 
     if (isset($conditions['limit'])) {
       if (isset($conditions['offset'])) {
@@ -161,18 +170,17 @@ class App_model extends Behavior_Model {
     $data = $this->db->query(implode(' ', $query));
 
     switch ($type) {
-      case 'all':
-        $return = (isset($conditions['return']) && $conditions['return'] == 'object') ? $data->result() : $data->result_array();
-        break;
       case 'first':
-        $return = (isset($conditions['is_object']) && $conditions['return'] == 'object') ? $data->row() : $data->row_array();
+        return $this->mapper_result($data->row_array());
         break;
       case 'count':
-        $return = $data->num_rows();
+        return $data->num_rows();
+        break;
+      case 'all':
+      default :
+        return $this->mapper_result($data->result_array());
         break;
     }
-
-    return $this->mapper_result($return);
   }
 
   public function model_object_word($char = NULL) {
@@ -189,10 +197,16 @@ class App_model extends Behavior_Model {
         if (!is_array($row)) {
           $cell = explode('__', $key);
           $return[$this->model_object_word($cell[0])][$cell[1]] = $row;
+          if ($cell[1] == 'id') {
+            $return[$this->model_object_word($cell[0])]['uid'] = $this->get_uid($row, $cell[0]);
+          }
         } else {
           foreach ($row as $field => $value) {
             $cell = explode('__', $field);
             $return[$iterator][$this->model_object_word($cell[0])][$cell[1]] = $value;
+            if ($cell[1] == 'id') {
+              $return[$iterator][$this->model_object_word($cell[0])]['uid'] = $this->get_uid($value, $cell[0]);
+            }
           }
         }
         $iterator++;
@@ -201,8 +215,9 @@ class App_model extends Behavior_Model {
     }
   }
 
-  function get_uid($id = NULL) {
-    return md5($this->session->encryption_key . $this->_table . $id);
+  function get_uid($id = NULL, $table = NULL) {
+    $table = (empty($table)) ? $this->_table : $table;
+    return md5($this->session->encryption_key . $table . $id);
   }
 
   function set_uid($row) {

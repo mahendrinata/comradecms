@@ -17,6 +17,22 @@ class Content_type_model extends App_Model {
       'type'
   );
 
+  function get_content_types($content_id = NULL) {
+    $content_types = $this->find('all', array(
+        'fields' => array('type' => array()),
+        'from' => 'content_type',
+        'join' => array(
+            'type' => array('left' => 'content_types.type_id = types.id')
+        ),
+        'condition' => array(
+            'content_type' => array(
+                'content_id' => $content_id
+            )
+        )
+    ));
+    return $content_types;
+  }
+
 }
 
 ?>

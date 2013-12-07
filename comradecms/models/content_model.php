@@ -34,15 +34,10 @@ class Content_model extends App_Model {
    * @param bolean $hide
    * @return array
    */
-  function get_contents($active = FALSE, $hide = FALSE, $conditions = array()) {
-    $data = $this->get_data('first', array(
-//        'fields' => array(),
+  function get_contents($active = FALSE, $hide = FALSE) {
+    $contents = $this->find('all', array(
         'join' => array(
             'content_detail' => array('left' => 'contents.id = content_details.content_id'),
-//            'content_tag'=> array('left' => 'contents.id = content_tags.content_id'),
-//            'content_type'=> array('left' => 'contents.id = content_types.content_id'),
-//            'tag'=> array('left' => 'tags.id = content_tags.tag_id'),
-//            'type'=> array('left' => 'types.id = content_types.type_id'),
         ),
         'condition' => array(
             'content' => array(
@@ -54,12 +49,12 @@ class Content_model extends App_Model {
             )
         )
     ));
-    print_r($data);die;
-    $conditions = array_merge(array('is_hide' => $hide, 'is_active' => $active), $conditions);
-    $contents = $this->with('content_detail')
-            ->with('content_tag')
-            ->with('content_type')
-            ->get_many_by($conditions);
+    $this->load->model('Content_tag_model');
+    $this->load->model('Content_type_model');
+    foreach ($contents as $key => $row) {
+      $contents[$key]['ContentTag'] = $this->Content_tag_model->get_content_tags($row['Content']['id']);
+      $contents[$key]['ContentType'] = $this->Content_type_model->get_content_types($row['Content']['id']);
+    }
     return $contents;
   }
 
@@ -69,55 +64,124 @@ class Content_model extends App_Model {
    * @return array
    */
   function get_content($id = NULL) {
-    $content = $this->with('content_detail')
-            ->with('content_tag')
-            ->with('content_type')
-            ->with('media')
-            ->get_by('id', $id);
+    $content = $this->find('first', array(
+        'join' => array(
+            'content_detail' => array('left' => 'contents.id = content_details.content_id'),
+        ),
+        'condition' => array(
+            'content' => array(
+                'id' => $id,
+                'is_hide' => FALSE,
+                'is_active' => TRUE
+            ),
+            'content_detail' => array(
+                'language_id' => self::$active_session['language']['id']
+            )
+        )
+    ));
+    if (!empty($content)) {
+      $this->load->model('Content_tag_model');
+      $this->load->model('Content_type_model');
+      $content['ContentTag'] = $this->Content_tag_model->get_content_tags($content['Content']['id']);
+      $content['ContentType'] = $this->Content_type_model->get_content_types($content['Content']['id']);
+    }
     return $content;
   }
 
   function get_contents_by_type($type = NULL, $limit = 8) {
-    $conditions = array(
-        'contents.is_active' => TRUE,
-        'contents.is_hide' => FALSE,
-        'content_details.language_id' => self::$active_session['language']['id'],
-        'types.slug' => $type
-    );
-    $this->_database
-            ->join('content_details', 'contents.id = content_details.content_id', 'INNER')
-            ->join('content_types', 'content_types.content_id = contents.id', 'INNER')
-            ->join('types', 'content_types.type_id = types.id', 'INNER')
-            ->limit($limit)
-            ->order_by('content_details.id', 'DESC');
+    $contents = $this->find('all', array(
+        'join' => array(
+            'content_detail' => array('left' => 'contents.id = content_details.content_id'),
+            'content_type' => array('left' => 'contents.id = content_types.content_id'),
+            'type' => array('left' => 'type.id = content_types.type_id'),
+        ),
+        'condition' => array(
+            'content' => array(
+                'is_hide' => FALSE,
+                'is_active' => TRUE
+            ),
+            'content_detail' => array(
+                'language_id' => self::$active_session['language']['id']
+            ),
+            'type' => array(
+                'slug' => $type
+            )
+        )
+    ));
+    $this->load->model('Content_tag_model');
+    foreach ($contents as $key => $row) {
+      $contents[$key]['ContentTag'] = $this->Content_tag_model->get_content_tags($row['Content']['id']);
+    }
+  }
 
-    $contents = $this->get_many_by($conditions);
-    return $contents;
+  function get_contents_by_tag($tag = NULL, $limit = 8) {
+    $contents = $this->find('all', array(
+        'join' => array(
+            'content_detail' => array('left' => 'contents.id = content_details.content_id'),
+            'content_tag' => array('left' => 'contents.id = content_tags.content_id'),
+            'tag' => array('left' => 'tags.id = content_tags.tag_id'),
+        ),
+        'condition' => array(
+            'content' => array(
+                'is_hide' => FALSE,
+                'is_active' => TRUE
+            ),
+            'content_detail' => array(
+                'language_id' => self::$active_session['language']['id']
+            ),
+            'tag' => array(
+                'slug' => $tag
+            )
+        )
+    ));
+    $this->load->model('Content_type_model');
+    foreach ($contents as $key => $row) {
+      $contents[$key]['ContentType'] = $this->Content_type_model->get_content_types($row['Content']['id']);
+    }
   }
 
   function get_content_by_slug($slug = NULL) {
-    $content = $this->with('content_detail')
-            ->with('content_tag')
-            ->with('content_type')
-            ->with('media')
-            ->get_by('slug', $slug);
+    $content = $this->find('first', array(
+        'join' => array(
+            'content_detail' => array('left' => 'contents.id = content_details.content_id'),
+        ),
+        'condition' => array(
+            'content' => array(
+                'is_hide' => FALSE,
+                'is_active' => TRUE
+            ),
+            'content_detail' => array(
+                'slug' => $slug,
+                'language_id' => self::$active_session['language']['id']
+            )
+        )
+    ));
+    if (!empty($content)) {
+      $this->load->model('Content_tag_model');
+      $this->load->model('Content_type_model');
+      $content['ContentTag'] = $this->Content_tag_model->get_content_tags($content['Content']['id']);
+      $content['ContentType'] = $this->Content_type_model->get_content_types($content['Content']['id']);
+    }
     return $content;
   }
 
   function get_recent_content($limit = 10) {
-    $conditions = array(
-        'contents.is_active' => TRUE,
-        'contents.is_hide' => FALSE,
-        'content_details.language_id' => self::$active_session['language']['id']
-    );
-    $this->_database
-            ->select('content_details.*')
-            ->join('content_details', 'contents.id = content_details.content_id', 'INNER')
-            ->limit($limit)
-            ->order_by('content_details.id', 'DESC');
-
-    $contents = $this->get_many_by($conditions);
-
+    $contents = $this->find('all', array(
+        'join' => array(
+            'content_detail' => array('left' => 'contents.id = content_details.content_id'),
+        ),
+        'condition' => array(
+            'content' => array(
+                'is_hide' => FALSE,
+                'is_active' => TRUE
+            ),
+            'content_detail' => array(
+                'language_id' => self::$active_session['language']['id']
+            )
+        ),
+        'order' => array('contents.id DESC'),
+        'limit' => $limit
+    ));
     return $contents;
   }
 
