@@ -38,6 +38,7 @@ class Content_model extends App_Model {
     $contents = $this->find('all', array(
         'join' => array(
             'content_detail' => array('left' => 'contents.id = content_details.content_id'),
+            'user' => array('left' => 'contents.user_id = users.id'),
         ),
         'condition' => array(
             'content' => array(
@@ -51,9 +52,11 @@ class Content_model extends App_Model {
     ));
     $this->load->model('Content_tag_model');
     $this->load->model('Content_type_model');
+    $this->load->model('Media_model');
     foreach ($contents as $key => $row) {
       $contents[$key]['ContentTag'] = $this->Content_tag_model->get_content_tags($row['Content']['id']);
       $contents[$key]['ContentType'] = $this->Content_type_model->get_content_types($row['Content']['id']);
+      $contents[$key]['ContentMedia'] = $this->Media_model->get_content_medias($row['Content']['id']);
     }
     return $contents;
   }
@@ -67,6 +70,7 @@ class Content_model extends App_Model {
     $content = $this->find('first', array(
         'join' => array(
             'content_detail' => array('left' => 'contents.id = content_details.content_id'),
+            'user' => array('left' => 'contents.user_id = users.id'),
         ),
         'condition' => array(
             'content' => array(
@@ -82,8 +86,10 @@ class Content_model extends App_Model {
     if (!empty($content)) {
       $this->load->model('Content_tag_model');
       $this->load->model('Content_type_model');
+      $this->load->model('Media_model');
       $content['ContentTag'] = $this->Content_tag_model->get_content_tags($content['Content']['id']);
       $content['ContentType'] = $this->Content_type_model->get_content_types($content['Content']['id']);
+      $content['ContentMedia'] = $this->Media_model->get_content_medias($content['Content']['id']);
     }
     return $content;
   }
@@ -94,6 +100,7 @@ class Content_model extends App_Model {
             'content_detail' => array('left' => 'contents.id = content_details.content_id'),
             'content_type' => array('left' => 'contents.id = content_types.content_id'),
             'type' => array('left' => 'type.id = content_types.type_id'),
+            'user' => array('left' => 'contents.user_id = users.id'),
         ),
         'condition' => array(
             'content' => array(
@@ -109,8 +116,10 @@ class Content_model extends App_Model {
         )
     ));
     $this->load->model('Content_tag_model');
+    $this->load->model('Media_model');
     foreach ($contents as $key => $row) {
       $contents[$key]['ContentTag'] = $this->Content_tag_model->get_content_tags($row['Content']['id']);
+      $contents[$key]['ContentMedia'] = $this->Media_model->get_content_medias($row['Content']['id']);
     }
   }
 
@@ -120,6 +129,7 @@ class Content_model extends App_Model {
             'content_detail' => array('left' => 'contents.id = content_details.content_id'),
             'content_tag' => array('left' => 'contents.id = content_tags.content_id'),
             'tag' => array('left' => 'tags.id = content_tags.tag_id'),
+            'user' => array('left' => 'contents.user_id = users.id'),
         ),
         'condition' => array(
             'content' => array(
@@ -135,8 +145,10 @@ class Content_model extends App_Model {
         )
     ));
     $this->load->model('Content_type_model');
+    $this->load->model('Media_model');
     foreach ($contents as $key => $row) {
       $contents[$key]['ContentType'] = $this->Content_type_model->get_content_types($row['Content']['id']);
+      $contents[$key]['ContentMedia'] = $this->Media_model->get_content_medias($row['Content']['id']);
     }
   }
 
@@ -144,6 +156,7 @@ class Content_model extends App_Model {
     $content = $this->find('first', array(
         'join' => array(
             'content_detail' => array('left' => 'contents.id = content_details.content_id'),
+            'user' => array('left' => 'contents.user_id = users.id'),
         ),
         'condition' => array(
             'content' => array(
@@ -159,8 +172,10 @@ class Content_model extends App_Model {
     if (!empty($content)) {
       $this->load->model('Content_tag_model');
       $this->load->model('Content_type_model');
+      $this->load->model('Media_model');
       $content['ContentTag'] = $this->Content_tag_model->get_content_tags($content['Content']['id']);
       $content['ContentType'] = $this->Content_type_model->get_content_types($content['Content']['id']);
+      $content['ContentMedia'] = $this->Media_model->get_content_medias($content['Content']['id']);
     }
     return $content;
   }
@@ -169,6 +184,7 @@ class Content_model extends App_Model {
     $contents = $this->find('all', array(
         'join' => array(
             'content_detail' => array('left' => 'contents.id = content_details.content_id'),
+            'user' => array('left' => 'contents.user_id = users.id'),
         ),
         'condition' => array(
             'content' => array(

@@ -50,6 +50,10 @@ class Media_model extends App_Model {
     return $galleries;
   }
 
+  function get_content_medias($content_id = NULL) {
+    return $this->get_many_by(array('is_active' => TRUE, 'content_id' => $content_id));
+  }
+
   function get_random_gallery($limit = 10, $conditions = array()) {
     $conditions = array_merge(array(
         'medias.is_active' => TRUE,
