@@ -7,10 +7,10 @@
           <img alt="avatar" src="<?php echo get_user_avatar($content['User']['photo']); ?>">
         </a>
         <a href="<?php echo get_content_url($content['ContentDetail']['slug']); ?>" class="timeline-item-link">
-          <div class="timeline-item-content">
+          <div class="timeline-item-content <?php if (empty($content['ContentMedia'])) echo 'timeline-no-item-cover'; ?>">
             <?php if (!empty($content['ContentMedia'])) { ?>
               <div class="timeline-item-cover">
-                <img src="<?php echo get_content_media($content['ContentMedia'][0]['dir']); ?>" alt="paris">
+                <img src="<?php echo get_content_media($content['ContentMedia'][0]['dir']); ?>" alt="<?php echo $content['ContentDetail']['title']; ?>">
               </div>
             <?php } ?>
             <h2><?php echo $content['ContentDetail']['title']; ?></h2>

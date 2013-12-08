@@ -34,7 +34,7 @@ class Content_model extends App_Model {
    * @param bolean $hide
    * @return array
    */
-  function get_contents() {
+  function get_contents($limit = NULL, $offset = NULL) {
     $contents = $this->find('all', array(
         'join' => array(
             'content_detail' => array('left' => 'contents.id = content_details.content_id'),
@@ -48,7 +48,10 @@ class Content_model extends App_Model {
             'content_detail' => array(
                 'language_id' => self::$active_session['language']['id']
             )
-        )
+        ),
+        'order' => array('contents.id DESC'),
+        'limit' => $limit,
+        'offset' => $offset
     ));
     $this->load->model('Content_tag_model');
     $this->load->model('Content_type_model');
@@ -61,6 +64,25 @@ class Content_model extends App_Model {
       $contents[$key]['Comment']['count'] = $this->Message_model->get_count_comments($row['Content']['id']);
     }
     return $contents;
+  }
+
+  function count_contents() {
+    $count = $this->find('count', array(
+        'join' => array(
+            'content_detail' => array('left' => 'contents.id = content_details.content_id'),
+        ),
+        'condition' => array(
+            'content' => array(
+                'is_hide' => FALSE,
+                'is_active' => TRUE
+            ),
+            'content_detail' => array(
+                'language_id' => self::$active_session['language']['id']
+            )
+        ),
+        'order' => array('contents.id DESC'),
+    ));
+    return $count;
   }
 
   /**
@@ -98,7 +120,7 @@ class Content_model extends App_Model {
     return $content;
   }
 
-  function get_contents_by_type($type = NULL, $limit = 8) {
+  function get_contents_by_type($type = NULL, $limit = NULL, $offset = NULL) {
     $contents = $this->find('all', array(
         'join' => array(
             'content_detail' => array('left' => 'contents.id = content_details.content_id'),
@@ -117,7 +139,10 @@ class Content_model extends App_Model {
             'type' => array(
                 'slug' => $type
             )
-        )
+        ),
+        'order' => array('contents.id DESC'),
+        'limit' => $limit,
+        'offset' => $offset
     ));
     $this->load->model('Content_tag_model');
     $this->load->model('Media_model');
@@ -129,7 +154,7 @@ class Content_model extends App_Model {
     }
   }
 
-  function get_contents_by_tag($tag = NULL, $limit = 8) {
+  function get_contents_by_tag($tag = NULL, $limit = NULL, $offset = NULL) {
     $contents = $this->find('all', array(
         'join' => array(
             'content_detail' => array('left' => 'contents.id = content_details.content_id'),
@@ -148,7 +173,10 @@ class Content_model extends App_Model {
             'tag' => array(
                 'slug' => $tag
             )
-        )
+        ),
+        'order' => array('contents.id DESC'),
+        'limit' => $limit,
+        'offset' => $offset
     ));
     $this->load->model('Content_type_model');
     $this->load->model('Media_model');
@@ -189,7 +217,7 @@ class Content_model extends App_Model {
     return $content;
   }
 
-  function get_recent_content($limit = 10) {
+  function get_recent_content($limit = NULL, $offset = NULL) {
     $contents = $this->find('all', array(
         'join' => array(
             'content_detail' => array('left' => 'contents.id = content_details.content_id'),
@@ -205,7 +233,8 @@ class Content_model extends App_Model {
             )
         ),
         'order' => array('contents.id DESC'),
-        'limit' => $limit
+        'limit' => $limit,
+        'offset' => $offset
     ));
     return $contents;
   }

@@ -9,7 +9,7 @@ if (!defined('BASEPATH'))
  */
 class App_Controller extends Behavior_controller {
 
-  public static $segment_pagination = 4;
+  public static $offset = 4;
   public static $limit = 10;
   protected static $id;
   public $data = array();
@@ -59,11 +59,17 @@ class App_Controller extends Behavior_controller {
     $this->session->set_flashdata('message', array('alert' => ($callback_action) ? 'success' : 'error', 'message' => $message));
   }
 
-  protected function set_pagination($count = NULL, $suffix = NULL, $limit = NULL, $segment_pagination = NULL, $site_url = NULL) {
+  protected function pagination_create($url = NULL, $count = NULL, $limit = NULL, $offset = NULL, $suffix = NULL) {
+    $config = $this->set_pagination($count, $suffix, $limit, $offset, $url);
+    $this->pagination->initialize($config);
+    return $this->get_pagination();
+  }
+
+  protected function set_pagination($count = NULL, $suffix = NULL, $limit = NULL, $offset = NULL, $site_url = NULL) {
     $config['base_url'] = site_url((empty($site_url) ? $this->get_site_url_pagination() : $site_url));
     $config['total_rows'] = $count;
     $config['per_page'] = (empty($limit)) ? self::$limit : $limit;
-    $config['uri_segment'] = (empty($segment_pagination)) ? self::$segment_pagination : $segment_pagination;
+    $config['uri_segment'] = (empty($offset)) ? self::$offset : $offset;
     $config['suffix'] = $suffix;
     return $config;
   }
@@ -76,24 +82,13 @@ class App_Controller extends Behavior_controller {
     return $this->router->directory . '/' . $this->data['class'] . '/' . $this->data['method'];
   }
 
-  protected function get_offset_from_segment($segment_pagination = NULL) {
-    $segment_pagination = (empty($segment_pagination)) ? self::$segment_pagination : $segment_pagination;
-    return $this->uri->segment($segment_pagination);
-  }
-
-  protected function get_search_params($field = array()) {
-    $params = array();
-    if (isset($_GET) && !empty($_GET)) {
-      foreach ($field as $key => $value) {
-        $params[$value . ' LIKE'] = '%' . $_GET['search'] . '%';
-      }
-    }
-    return $params;
+  protected function get_offset_from_segment($offset = NULL) {
+    $offset = (empty($offset)) ? self::$offset : $offset;
+    return $this->uri->segment($offset);
   }
 
   protected function get_suffix_params() {
     $suffix = '';
-    $params = $this->get_search_params();
     if (isset($_GET) && !empty($_GET)) {
       $str = array();
       foreach ($_GET as $key => $value) {

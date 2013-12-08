@@ -700,6 +700,9 @@ select#option-menu:hover{
     padding: 20px;
     padding-right: 120px;
 }
+.timeline-item .timeline-no-item-cover{
+  padding: 20px;
+}
 .timeline-item .timeline-item-content .timeline-item-cover {
     position: absolute;
     top: 20px;

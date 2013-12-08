@@ -161,7 +161,7 @@ class App_model extends Behavior_Model {
 
     if (isset($conditions['limit'])) {
       if (isset($conditions['offset'])) {
-        $query[] = 'LIMIT ' . $conditions['limit'] . ',' . $conditions['offset'];
+        $query[] = 'LIMIT ' . ceil($conditions['offset']) . ',' . $conditions['limit'];
       } else {
         $query[] = 'LIMIT ' . $conditions['limit'];
       }
