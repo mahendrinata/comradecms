@@ -59,10 +59,14 @@ class App_Controller extends Behavior_controller {
     $this->session->set_flashdata('message', array('alert' => ($callback_action) ? 'success' : 'error', 'message' => $message));
   }
 
-  protected function pagination_create($url = NULL, $count = NULL, $limit = NULL, $offset = NULL, $suffix = NULL) {
+  protected function pagination_create($url = NULL, $count = NULL, $limit = NULL, $offset = NULL, $suffix = NULL, $return = FALSE) {
     $config = $this->set_pagination($count, $suffix, $limit, $offset, $url);
     $this->pagination->initialize($config);
-    return $this->get_pagination();
+    if (!$return) {
+      $this->data['pagination'] = $this->get_pagination();
+    } else {
+      return $this->get_pagination();
+    }
   }
 
   protected function set_pagination($count = NULL, $suffix = NULL, $limit = NULL, $offset = NULL, $site_url = NULL) {
