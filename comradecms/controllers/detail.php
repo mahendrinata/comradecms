@@ -7,7 +7,7 @@ class Detail extends Public_Controller {
 
   public function index($slug = NULL) {
     $this->data['content'] = $this->Content_model->get_content_by_type($slug);
-    $this->load->view(self::$layout_default, $this->data);
+    $this->load->view(self::$layout . 'default', $this->data);
   }
 
 }

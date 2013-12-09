@@ -10,7 +10,7 @@ class Category extends Public_Controller {
     
     $this->pagination_create($this->Content_model->count_contents_by_type());
     
-    $this->load->view(self::$layout_default, $this->data);
+    $this->load->view(self::$layout . 'default', $this->data);
   }
 
 }

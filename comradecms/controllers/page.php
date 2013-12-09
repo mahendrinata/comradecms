@@ -6,12 +6,13 @@ if (!defined('BASEPATH'))
 class Page extends Public_Controller {
 
   public function index() {
-    $this->load->view(self::$layout_default, $this->data);
+    $this->load->view(self::$layout . 'default', $this->data);
   }
 
   public function contact_us() {
-    $this->load->view(self::$layout_default, $this->data);
+    $this->load->view(self::$layout . 'default', $this->data);
   }
+
 }
 
 ?>
