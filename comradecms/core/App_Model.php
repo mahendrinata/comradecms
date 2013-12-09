@@ -121,7 +121,7 @@ class App_model extends Behavior_Model {
         if (is_array($fields) && !empty($fields)) {
           $string_fields[] = $this->set_fields(array($table => $fields));
         } else {
-          $string_fields[] = $this->get_fields(array($table));
+          $string_fields[] = $this->get_fields(array($fields));
         }
       }
       $query[] = 'SELECT ' . implode(',', $string_fields);
