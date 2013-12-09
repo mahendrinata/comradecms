@@ -59,7 +59,7 @@ class App_Controller extends Behavior_controller {
     $this->session->set_flashdata('message', array('alert' => ($callback_action) ? 'success' : 'error', 'message' => $message));
   }
 
-  protected function pagination_create($url = NULL, $count = NULL, $limit = NULL, $offset = NULL, $suffix = NULL, $return = FALSE) {
+  protected function pagination_create($count = NULL, $suffix = NULL, $limit = NULL, $offset = NULL, $url = NULL, $return = FALSE) {
     $config = $this->set_pagination($count, $suffix, $limit, $offset, $url);
     $this->pagination->initialize($config);
     if (!$return) {
@@ -82,8 +82,9 @@ class App_Controller extends Behavior_controller {
     return $this->pagination->create_links();
   }
 
-  protected function get_site_url_pagination($site_url = NULL) {
-    return $this->router->directory . '/' . $this->data['class'] . '/' . $this->data['method'];
+  protected function get_site_url_pagination() {
+    $dir = (empty($this->router->directory)) ? '' : $this->router->directory . '/';
+    return $dir . $this->data['class'] . '/' . $this->data['method'];
   }
 
   protected function get_offset_from_segment($offset = NULL) {

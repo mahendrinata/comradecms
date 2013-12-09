@@ -15,7 +15,7 @@ class Home extends Public_Controller {
     $this->data['contents'] = $this->Content_model->get_contents(self::$limit, $this->get_offset_from_segment(self::$offset));
     
     $count = $this->Content_model->count_contents();
-    $this->pagination_create('home/index', $count, self::$limit, self::$offset);
+    $this->pagination_create($count);
     
     $this->data['portfolios'] = $this->Content_model->get_contents_by_type('portfolio', 8);
     
