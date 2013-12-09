@@ -153,6 +153,28 @@ class Content_model extends App_Model {
       $contents[$key]['Comment']['count'] = $this->Message_model->get_count_comments($row['Content']['id']);
     }
   }
+  function count_contents_by_type($slug = NULL) {
+    $count = $this->find('count', array(
+        'join' => array(
+            'content_detail' => array('left' => 'contents.id = content_details.content_id'),
+            'content_type' => array('left' => 'contents.id = content_types.content_id'),
+        ),
+        'condition' => array(
+            'content' => array(
+                'is_hide' => FALSE,
+                'is_active' => TRUE
+            ),
+            'content_detail' => array(
+                'language_id' => self::$active_session['language']['id']
+            ),
+            'type' => array(
+                'slug' => $slug
+            )
+        ),
+        'order' => array('contents.id DESC'),
+    ));
+    return $count;
+  }
 
   function get_contents_by_tag($tag = NULL, $limit = NULL, $offset = NULL) {
     $contents = $this->find('all', array(
