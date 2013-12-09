@@ -5,13 +5,7 @@ if (!defined('BASEPATH'))
 
 class Home extends Public_Controller {
   
-  public function __construct() {
-    self::$offset = 3;
-    parent::__construct();
-  }
-
   public function index() {
-    $this->load->model('Content_model');    
     $this->data['contents'] = $this->Content_model->get_contents(self::$limit, $this->get_offset_from_segment(self::$offset));
     
     $this->pagination_create($this->Content_model->count_contents());
