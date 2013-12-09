@@ -1,4 +1,4 @@
-<?php if (!empty($portfolios)) { ?>
+<?php if (isset($portfolios) && !empty($portfolios)) { ?>
   <div id="recent-work">
     <h2>Recent Work</h2>
     <ul id="portfolio-items" class="group">

@@ -19,6 +19,7 @@ class User_model extends App_Model {
       array('name' => 'address', 'type' => 'text'),
       array('name' => 'phone', 'type' => 'varchar'),
       array('name' => 'photo', 'type' => 'varchar'),
+      array('name' => 'description', 'type' => 'text'),
       array('name' => 'password', 'type' => 'varchar', 'require' => TRUE),
       array('name' => 'password_salt', 'type' => 'varchar', 'require' => TRUE),
       array('name' => 'activation_code', 'type' => 'varchar', 'require' => TRUE),

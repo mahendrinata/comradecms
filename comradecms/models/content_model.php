@@ -231,6 +231,7 @@ class Content_model extends App_Model {
       $this->load->model('Content_tag_model');
       $this->load->model('Content_type_model');
       $this->load->model('Media_model');
+      $this->load->model('Message_model');
       $content['ContentTag'] = $this->Content_tag_model->get_content_tags($content['Content']['id']);
       $content['ContentType'] = $this->Content_type_model->get_content_types($content['Content']['id']);
       $content['ContentMedia'] = $this->Media_model->get_content_medias($content['Content']['id']);

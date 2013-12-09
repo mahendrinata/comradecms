@@ -129,7 +129,7 @@ function get_content_url($slug = NULL) {
   if (empty($slug)) {
     return '#';
   } else {
-    return base_url() . 'detail/' . $slug;
+    return base_url() . 'detail/index/' . $slug;
   }
 }
 

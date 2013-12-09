@@ -1,5 +1,3 @@
-<?php $this->load->view($template . 'element/content/slider'); ?>
-
 <div id="home" class="group">
   <div id="timeline" class="col span_2_of_3">  
     <?php foreach ($contents as $content) { ?>
@@ -27,5 +25,3 @@
   <?php $this->load->view($template . 'element/content/sidebar'); ?>
 
 </div>
-
-<?php $this->load->view($template . 'element/content/portfolio'); ?>

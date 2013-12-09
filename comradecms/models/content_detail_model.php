@@ -9,6 +9,7 @@ class Content_detail_model extends App_Model {
       array('name' => 'id', 'type' => 'integer', 'require' => TRUE, 'primary_key' => TRUE, 'auto_increment' => TRUE),
       array('name' => 'slug', 'type' => 'varchar', 'require' => TRUE, 'unique' => TRUE, 'index' => TRUE),
       array('name' => 'title', 'type' => 'varchar', 'require' => TRUE),
+      array('name' => 'subtitle', 'type' => 'varchar'),
       array('name' => 'meta_description', 'type' => 'text'),
       array('name' => 'short_description', 'type' => 'text'),
       array('name' => 'description', 'type' => 'text'),
