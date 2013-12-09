@@ -24,7 +24,7 @@ class App_model extends Behavior_Model {
   public function get_fields($models = array(), $string = TRUE) {
     $string_field = array();
     if (empty($models)) {
-      foreach ($fields as $field) {
+      foreach ($this->fields as $field) {
         $string_field[] = $this->_table . '.' . $field['name'] . ' AS ' . $this->_table . '__' . $field['name'];
       }
     } else {
@@ -59,7 +59,6 @@ class App_model extends Behavior_Model {
   }
 
   public function set_condition_value($field = NULL, $value = NULL) {
-//    $field = str_replace('.', '__', $field);
     $operations = explode(' ', $field);
     if (count($operations) == 1) {
       return $field . ' = "' . $value . '"';

@@ -19,7 +19,7 @@ class Content_tag_model extends App_Model {
 
   function get_content_tags($content_id = NULL) {
     $content_tags = $this->find('all', array(
-        'fields' => array('tag' => array()),
+        'fields' => array('tag'),
         'from' => 'content_tag',
         'join' => array(
             'tag' => array('left' => 'content_tags.tag_id = tags.id')
