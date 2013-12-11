@@ -41,7 +41,7 @@ if (!defined('BASEPATH'))
   |
  */
 
-$route['default_controller'] = "frontpage";
+$route['default_controller'] = "home";
 $route['404_override'] = '';
 
 
