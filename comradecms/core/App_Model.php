@@ -213,6 +213,15 @@ class App_model extends Behavior_Model {
       return $return;
     }
   }
+  
+  public function mapper_slug($data){
+    $return = array();
+    $model = $this->model_object_word($this->_table);
+    foreach ($data as $row){
+      $return[$row[$model]['slug']] = $row;
+    }
+    return $return;
+  }
 
   function get_uid($id = NULL, $table = NULL) {
     $table = (empty($table)) ? $this->_table : $table;

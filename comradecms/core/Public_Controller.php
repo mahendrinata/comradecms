@@ -27,12 +27,13 @@ class Public_Controller extends App_Controller {
 
   function set_settings() {
     $this->load->model('Setting_model');
+    $this->data['web_setting'] =$setting = $this->Setting_model->get_settings_mapper_slug();
 
-    $this->data['template_data'] = $this->Setting_model->get_active_template();
-    self::$layout = self::$template_folder . '/' . $this->data['template_data']['value'] . '/layout/';
+    $this->data['template_data'] = $template = $this->Setting_model->get_setting_by_type('template', $setting);
+    self::$layout = self::$template_folder . '/' . $template['value'] . '/layout/';
     self::$layout_default = self::$layout . $this->data['class'];
 
-    $this->data['template'] = self::$template_folder . '/' . $this->data['template_data']['value'] . '/';
+    $this->data['template'] = self::$template_folder . '/' . $template['value'] . '/';
 
     $this->load->model('Language_model');
     $this->data['languages'] = $this->Language_model->get_many_by('is_active', TRUE);

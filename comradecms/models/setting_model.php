@@ -53,6 +53,30 @@ class Setting_model extends App_Model {
     return $this->get_by(array('type_id' => $type['id'], 'is_active' => TRUE));
   }
 
+  function get_settings_mapper_slug() {
+    $contents = $this->find('all', array(
+        'join' => array(
+            'type' => array('left' => 'types.id = settings.type_id')
+        ),
+        'condition' => array(
+            'setting' => array(
+                'is_active' => TRUE
+            )
+        )
+    ));
+
+    return $this->mapper_slug($contents);
+  }
+
+  function get_settings_by_type($slug = NULL, $data = array()) {
+    foreach ($data as $row) {
+      if ($row['Type']['slug'] == $slug) {
+        return $row[$this->model_object_word($this->_table)];
+      }
+    }
+    return array();
+  }
+
 }
 
 ?>
