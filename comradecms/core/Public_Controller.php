@@ -29,7 +29,7 @@ class Public_Controller extends App_Controller {
     $this->load->model('Setting_model');
     $this->data['web_setting'] =$setting = $this->Setting_model->get_settings_mapper_slug();
 
-    $this->data['template_data'] = $template = $this->Setting_model->get_setting_by_type('template', $setting);
+    $this->data['template_data'] = $template = $this->Setting_model->get_settings_by_type('template', $setting);
     self::$layout = self::$template_folder . '/' . $template['value'] . '/layout/';
     self::$layout_default = self::$layout . $this->data['class'];
 
