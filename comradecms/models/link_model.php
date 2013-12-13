@@ -8,6 +8,7 @@ class Link_model extends App_Model {
   public $fields = array(
       array('name' => 'id', 'type' => 'integer', 'require' => TRUE, 'primary_key' => TRUE, 'auto_increment' => TRUE),
       array('name' => 'url', 'type' => 'varchar', 'require' => TRUE),
+      array('name' => 'hierarchy', 'type' => 'varchar'),
       array('name' => 'is_redirect', 'type' => 'boolean'),
       array('name' => 'is_active', 'type' => 'boolean'),
       array('name' => 'parent_id', 'type' => 'integer', 'index' => TRUE),
@@ -20,6 +21,32 @@ class Link_model extends App_Model {
       'media'
   );
   public $belongs_to = array('type');
+
+  function get_menus($type = NULL) {
+    $link = $this->find('first', array(
+        'join' => array(
+            'type' => array('left' => 'types.id = links.type_id')
+        ),
+        'condition' => array(
+            'type' => array(
+                'slug' => $type
+            )
+        )
+    ));
+
+    $links = $this->find('all', array(
+        'join' => array(
+            'type' => array('left' => 'types.id = links.type_id')
+        ),
+        'condition' => array(
+            'link' => array(
+                'hierarchy LIKE' => $link['Link']['hierarchy'] . '/%'
+            )
+        )
+    ));
+
+    return $links;
+  }
 
 }
 

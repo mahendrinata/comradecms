@@ -16,18 +16,20 @@ class Public_Controller extends App_Controller {
   public function __construct() {
     parent::__construct();
     self::$offset = 3;
-    $this->load->model('Content_model');    
+    $this->load->model('Content_model');
 
     $this->set_settings();
 
     $this->set_language();
-    
+
+    $this->set_menu();
+
     $this->set_widget();
   }
 
   function set_settings() {
     $this->load->model('Setting_model');
-    $this->data['web_setting'] =$setting = $this->Setting_model->get_settings_mapper_slug();
+    $this->data['web_setting'] = $setting = $this->Setting_model->get_settings_mapper_slug();
 
     $this->data['template_data'] = $template = $this->Setting_model->get_settings_by_type('template', $setting);
     self::$layout = self::$template_folder . '/' . $template['value'] . '/layout/';
@@ -47,12 +49,17 @@ class Public_Controller extends App_Controller {
     }
   }
 
+  function set_menu() {
+    $this->load->model('Link_model');
+    $this->data['frontend_menu'] = $this->Link_model->get_menus('frontend-menu');
+  }
+
   function set_widget() {
     $this->data['widget']['video'] = '//www.youtube.com/embed/I_Wyn1FgXwI';
-    
+
     $this->load->model('Media_model');
     $this->data['widget']['image'] = $this->Media_model->get_random_gallery();
-    
+
     $this->data['widget']['recent'] = $this->Content_model->get_recent_content();
   }
 
