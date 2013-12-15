@@ -7,6 +7,7 @@ class Link_model extends App_Model {
 
   public $fields = array(
       array('name' => 'id', 'type' => 'integer', 'require' => TRUE, 'primary_key' => TRUE, 'auto_increment' => TRUE),
+      array('name' => 'name', 'type' => 'varchar'),
       array('name' => 'url', 'type' => 'varchar', 'require' => TRUE),
       array('name' => 'hierarchy', 'type' => 'varchar'),
       array('name' => 'is_redirect', 'type' => 'boolean'),
