@@ -152,11 +152,11 @@ class App_model extends Behavior_Model {
     if (isset($conditions['condition']) && !empty($conditions['condition'])) {
       $query[] = $this->set_conditions($conditions['condition']);
     }
-    
+
     if (isset($conditions['order']) && !empty($conditions['order'])) {
-      $query[] = 'ORDER BY '.implode(',', $conditions['order']);
+      $query[] = 'ORDER BY ' . implode(',', $conditions['order']);
     }
-    
+
 
     if (isset($conditions['limit'])) {
       if (isset($conditions['offset'])) {
@@ -213,11 +213,11 @@ class App_model extends Behavior_Model {
       return $return;
     }
   }
-  
-  public function mapper_slug($data){
+
+  public function mapper_slug($data) {
     $return = array();
     $model = $this->model_object_word($this->_table);
-    foreach ($data as $row){
+    foreach ($data as $row) {
       $return[$row[$model]['slug']] = $row;
     }
     return $return;
@@ -255,12 +255,14 @@ class App_model extends Behavior_Model {
 
   function set_slug($row) {
     if (isset($row['slug']) && empty($row['slug'])) {
-      $slug = url_title((isset($row['name'])) ? $row['name'] : $row['title'], 'dash', TRUE);
-      $count = $this->count_by('slug', $slug);
-      if ($count > 0) {
-        $row['slug'] = $slug . '-' . ($count + 1);
-      } else {
-        $row['slug'] = $slug;
+      if (isset($this->fields['slug'])) {
+        $slug = url_title((isset($row['name'])) ? $row['name'] : $row['title'], 'dash', TRUE);
+        $count = $this->count_by('slug', $slug);
+        if ($count > 0) {
+          $row['slug'] = $slug . '-' . ($count + 1);
+        } else {
+          $row['slug'] = $slug;
+        }
       }
     }
     return $row;

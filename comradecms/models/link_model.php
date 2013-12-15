@@ -34,18 +34,22 @@ class Link_model extends App_Model {
         )
     ));
 
-    $links = $this->find('all', array(
-        'join' => array(
-            'type' => array('left' => 'types.id = links.type_id')
-        ),
-        'condition' => array(
-            'link' => array(
-                'hierarchy LIKE' => $link['Link']['hierarchy'] . '/%'
-            )
-        )
-    ));
+    if (!empty($link)) {
+      $links = $this->find('all', array(
+          'join' => array(
+              'type' => array('left' => 'types.id = links.type_id')
+          ),
+          'condition' => array(
+              'link' => array(
+                  'hierarchy LIKE' => $link['Link']['hierarchy'] . '/%'
+              )
+          )
+      ));
 
-    return $links;
+      return $links;
+    } else {
+      return NULL;
+    }
   }
 
 }
