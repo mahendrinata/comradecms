@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('BASEPATH'))
-  exit('No direct script access allowed');
+    exit('No direct script access allowed');
 
 /**
  * App Model use to add all behavior model
@@ -9,9 +9,9 @@ if (!defined('BASEPATH'))
  */
 class Behavior_controller extends CI_Controller {
 
-  function __construct() {
-    parent::__construct();
-  }
+    function __construct() {
+        parent::__construct();
+    }
 
 }
 
